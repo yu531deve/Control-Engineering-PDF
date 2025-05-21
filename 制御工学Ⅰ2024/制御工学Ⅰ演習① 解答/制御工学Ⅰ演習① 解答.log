@@ -1,7 +1,7 @@
-This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2025.2.15)  20 MAY 2025 22:48
+This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2025.2.15)  21 MAY 2025 20:59
  restricted system commands enabled.
-**"c:/Users/81807/Desktop/TeX/制御工学/制御工学Ⅰ演習① 解答/制御工学Ⅰ演習① 解答"
-("c:/Users/81807/Desktop/TeX/制御工学/制御工学Ⅰ演習① 解答/制御工学Ⅰ演習① 解答.tex"
+**"c:/Users/81807/Desktop/TeX/制御工学/制御工学Ⅰ2024/制御工学Ⅰ演習① 解答/制御工学Ⅰ演習① 解答"
+("c:/Users/81807/Desktop/TeX/制御工学/制御工学Ⅰ2024/制御工学Ⅰ演習① 解答/制御工学Ⅰ演習① 解答.tex"
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 Lua module: luaotfload 2024-02-14 v3.28 Lua based OpenType font support
@@ -1043,7 +1043,7 @@ Here is how much of LuaTeX's memory you used:
    avail lists: 1:40,2:39412,3:2285,4:802,5:377,6:33,7:3968,8:80,9:2120,10:6
  54011 multiletter control sequences out of 65536+600000
  73 fonts using 39202855 bytes
- 116i,19n,115p,1978b,2503s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 116i,19n,115p,1998b,2503s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2024/texmf-dist/fonts/opentype/public/lm/lmroman12-regular.otf><c:/texlive/2024/texmf-dist/fonts/truetype/public/ipaex/ipaexm.ttf><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
 Output written on 制御工学Ⅰ演習① 解答.pdf (10 pages, 330363 bytes).
 
