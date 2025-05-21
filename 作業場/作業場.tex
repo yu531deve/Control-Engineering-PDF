@@ -1,0 +1,101 @@
+\documentclass[a4paper,12pt]{article}
+%\documentclass[fleqn]{article}
+
+% ---パッケージ---
+\usepackage{amsmath,amssymb}    %数式用
+\usepackage{tcolorbox}   %囲み枠用（tcolorboxに変更）
+\usepackage{geometry}   %余白調節
+\usepackage{tikz}  % ← 図を描くためのTikZパッケージ
+\geometry{margin=25mm}  %余白を少し狭く
+\usetikzlibrary{decorations.pathmorphing,patterns,positioning,arrows.meta} % バネ・壁の模様
+\tikzset{
+  block/.style = {draw, rectangle, minimum height=2em, minimum width=3em},
+  sum/.style = {draw, circle, inner sep=0pt, minimum size=5mm},
+  input/.style = {coordinate},
+  output/.style = {coordinate}
+}
+\usetikzlibrary{calc}
+
+
+% --- 日本語用パッケージ ---
+\usepackage{luatexja}         % 日本語表示に必要
+\usepackage{luatexja-fontspec} % フォント指定用
+
+% --- フォント指定（Overleaf標準フォント）---
+\setmainjfont{IPAexMincho}  % 明朝体
+%\setmainjfont{IPAexGothic}  % ゴシック体にしたい場合
+
+% --- tcolorbox の設定 ---
+\tcbset{
+    colframe=black,
+    colback=white,         % 本文の背景（白）
+    boxrule=0.8pt,
+    arc=3pt,
+    outer arc=3pt,
+    boxsep=4pt,
+    coltitle=black,
+    colbacktitle=gray!20,  % タイトルの背景（グレー）
+    fonttitle=\normalsize
+}
+
+\begin{document}
+
+% ---------------[5(5)]--------------- 済
+\begin{tcolorbox}[title={5. (5)\(m=1,d_1=1,d_2=1,k=1\)とし、入力変位\(x_1(t)=\sin(t)\)を与えたときの応
+\indent \quad 答を求めよ。 }]
+
+パラメータを代入し、\(x_1(t)=\sin(t)\)のラプラス変換は\(X_i(s)=\dfrac{1}{s^2+1}\)なので
+    \vspace{-4mm}
+    \begin{align*}
+        &\qquad G(s) = \frac{s}{s^2 + 2s + 1} \\
+        &\therefore \quad X(s) = G(s) F(s) = \frac{s}{(s+1)^2(s^2 +1)} \\
+        &\therefore \quad X(s) =  \frac{\left(-\frac{1}{2}\right)}{(s+1)^2}
+        + \frac{\left(\frac{1}{2}\right)}{s^2 +1}\\
+        &\therefore \quad \mathcal{L}^{-1} \left[ X(s)\right] 
+        = \mathcal{L}^{-1} \left[\frac{\left(-\frac{1}{2}\right)}{(s+1)^2}\right]
+        + \mathcal{L}^{-1} \left[\frac{\left(\frac{1}{2}\right)}{s^2 +1}\right] \\
+        &\therefore \quad x(t) = -\frac{1}{2} t e^{-t} + \frac{1}{2} \sin t
+    \end{align*}
+
+\end{tcolorbox}
+
+% ---------------[5(6)]--------------- 済
+\begin{tcolorbox}[title={5. (6)\(m=1,d_1=1,d_2=2,k=2\)とし、入力変位\(x_1(t)=\sin(2t)\)を与えたときの応
+\indent \quad 答を求めよ。 }]
+
+パラメータを代入し、\(x_1(t)=\sin(2t)\)のラプラス変換は\(X_i(s)=\dfrac{2}{s^2+2^2}\)なので
+    \vspace{-4mm}
+    \begin{align*}
+        &\qquad G(s) = \frac{s}{s^2 + 3s + 2} \\
+        &\therefore \quad X(s) = G(s) F(s) = \frac{s}{(s+1)(s+2)(s^2+2^2)} \\
+        &\therefore \quad X(s) =  \frac{\left(-\frac{1}{5}\right)}{s+1} 
+        + \frac{\left(\frac{1}{4}\right)}{s+2}
+        + \frac{\left(-\frac{1}{20}s+\frac{3}{10}\right)}{s^2+2^2}\\
+        &\therefore \quad \mathcal{L}^{-1} \left[ X(s)\right] 
+        = \mathcal{L}^{-1} \left[\frac{\left(-\frac{1}{5}\right)}{s+1}  \right]
+        + \mathcal{L}^{-1} \left[\frac{\left(\frac{1}{4}\right)}{s+2} \right]
+        + \mathcal{L}^{-1} \left[\frac{\left(-\frac{1}{20}s+\frac{3}{10}\right)}{s^2+2^2}\right]  \\
+        &\therefore \quad x(t) = -\frac{1}{5} e^{-t} + \frac{1}{4} e^{-2t} - \frac{1}{20} \left\{ \cos (2t) - 3\sin (2t)\right\}
+    \end{align*}
+
+\end{tcolorbox}
+
+% ---------------[5(7)]--------------- 済
+\begin{tcolorbox}[title={5. (7)\(m=1,d_1=2,d_2=0,k=2\)とし、ステップ応答を求めよ。 }]
+
+    パラメータを代入し、ステップ入力のラプラス変換は\(F(s)=\dfrac{1}{s}\)なので
+    \vspace{-4mm}
+    \begin{align*}
+        &\qquad G(s) = \frac{2s}{s^2 + 2s + 2} \\
+        &\therefore \quad X(s) = G(s) F(s) 
+        = \frac{2}{s^2 + 2s + 2} \\
+        &\therefore \quad \mathcal{L}^{-1} \left[ X(s)\right] 
+        = \mathcal{L}^{-1} \left[\frac{2}{(s+1)^2+1}\right] \\
+        &\therefore \quad x(t) = 2 e^{-t} \sin t
+    \end{align*}
+
+\end{tcolorbox}
+
+
+
+\end{document}

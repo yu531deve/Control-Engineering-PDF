@@ -1,0 +1,59 @@
+% --------------- [47] ---------------
+\begin{tikzpicture}[auto, node distance=0.8cm and 0.8cm, >=Latex]
+    % --- 横並びの主系列ノード ---
+    \node at (0,0) (input) {};
+    \node[circle, draw, inner sep=1.5pt, right=of input] (sum1) {};           % 合流点1
+    \node[block, right=of sum1] (G1) {$G_1$};
+    \node[circle, draw, inner sep=1.5pt, right=of G1] (sum2) {};             % 合流点2
+    \node[block, right=of sum2] (G2) {$G_2$};
+    \node[circle, draw, inner sep=1.5pt, right=of G2] (sum3) {};             % 合流点3
+    \node[block, right=of sum3] (G3) {$G_3$};
+    \node[circle, fill=black, inner sep=1.5pt, right=of G3] (branch1) {};    % 分岐点1
+    \node[block, right=of branch1] (G4) {$G_4$};
+    \node[circle, fill=black, inner sep=1.5pt, right=of G4] (branch2) {};    % 分岐点2
+    \node[right=of branch2] (output) {};
+  
+    % --- 分岐点3（branch2の下） ---
+    \node[circle, fill=black, inner sep=1.5pt, below=1.0cm of branch2] (branch3) {};
+  
+    % === 主系列経路 ===
+    \draw[->] (input) -- (sum1);
+    \draw[->] (sum1) -- (G1);
+    \draw[->] (G1) -- (sum2);
+    \draw[->] (sum2) -- (G2);
+    \draw[->] (G2) -- (sum3);
+    \draw[->] (sum3) -- (G3);
+    \draw[->] (G3) -- (branch1);
+    \draw[->] (branch1) -- (G4);
+    \draw[->] (G4) -- (branch2);
+    \draw[->] (branch2) -- (output);
+  
+    % === 追加経路 ===
+      % 分岐1 → 合流2（カクカク経路：下→左→上）
+      \coordinate (pivot12) at ($(sum2)+(0,-0.7)$); 
+      \draw[->] (branch1) |- (pivot12) -| (sum2);
+  
+      % 分岐2 → 分岐3（真下に新ノード） ←既に実装済
+      \draw[->] (branch2) -- (branch3);
+  
+      % 分岐3 → 合流3（カクカク経路：下→左→上）
+      \coordinate (pivot33) at ($(sum3)+(0,-1.2)$);
+      \draw[->] (branch3) |- (pivot33) -| (sum3);              
+  
+    % 分岐3 → 合流1（カクカク：下→左→上、1本の矢印で）
+    \coordinate (pivot) at ($(sum1)+(0,-1.8)$);
+    \draw[->] (branch3) |- (pivot) -| (sum1);
+  
+  
+    % --- 加算記号配置 ---
+    \node at ($(sum1)+(-0.3,0.3)$) {\small $+$};
+    \node at ($(sum1)+(-0.3,-0.3)$) {\small $-$};
+    \node at ($(sum2)+(-0.3,0.3)$) {\small $+$};
+    \node at ($(sum2)+(-0.3,-0.3)$) {\small $-$};
+    \node at ($(sum3)+(-0.3,0.3)$) {\small $+$};
+    \node at ($(sum3)+(-0.3,-0.3)$) {\small $-$};
+  
+    \node at ($(sum1)+(-1.0,0.3)$) {\small $R(s)$};
+    \node at ($(branch2)+(1.0,0.3)$) {\small $C(s)$};
+  
+\end{tikzpicture}

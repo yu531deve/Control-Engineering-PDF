@@ -1,0 +1,40 @@
+
+\begin{tikzpicture}[auto, node distance=1.2cm and 0.8cm, >=Latex]
+
+    % ノード定義
+    \node[input] (input) {};
+    \node[circle, fill=black, inner sep=1.5pt, minimum size=3pt, right=of input] (branch) {}; % 分岐点：黒丸（サイズ修正）
+
+    \node[block, right=of branch] (G1) {$G_1$};
+    \node[circle, draw, inner sep=1.5pt, minimum size=3pt, right=of G1] (sum1) {}; % 中間合流点：白丸
+
+    \node[block, right=of sum1] (G2) {$G_2$};
+    \node[circle, draw, inner sep=1.5pt, minimum size=3pt, right=of G2] (sum2) {}; % 出力直前合流点：白丸
+
+    \node[output, right=of sum2] (output) {};
+
+    \node[circle, fill=black, inner sep=1.5pt, minimum size=3pt, below=1.5cm of sum1] (branch2) {}; % 下の黒丸（サイズ修正）
+    
+
+    % 線描画
+    \draw[-] (input) -- (branch);
+    \draw[->] (branch) -- (G1);
+    \draw[->] (G1) -- (sum1);
+    \draw[->] (sum1) -- (G2);
+    \draw[->] (G2) -- (sum2);
+    \draw[->] (sum2) -- (output);
+
+    \draw[-] (branch) |- (branch2);
+    \draw[->] (branch2.north) -| (sum1);
+
+    \draw[-] (branch2.east) -- ++(3.0,0); % .east を使うと右側から出る
+    \draw[->] ($(branch2.east)+(3.0,0)$) - | (sum2);
+    
+    % 加算記号を合流点にそれぞれ配置
+    \node at ($(sum1)+(-0.3,0.3)$) {\small $+$};
+    \node at ($(sum1)+(-0.3,-0.3)$) {\small $+$};
+
+    \node at ($(sum2)+(-0.3,0.3)$) {\small $+$};
+    \node at ($(sum2)+(-0.3,-0.3)$) {\small $+$};
+
+\end{tikzpicture}

@@ -1,0 +1,37 @@
+% --------------- [41] ---------------
+\begin{tikzpicture}[auto, node distance=0.8cm and 1.0cm, >=Latex]
+
+    % --- ノードと信号配置（横並び） ---
+    \node at (0,0) (R) {$R$};                           % R（目標値）
+    \node[block, right=of R] (G3) {$G_3$};              % G3
+    \node[circle, draw, inner sep=1.5pt, right=of G3] (sum1) {};  % 合流点1
+    \node[block, right=of sum1] (G1) {$G_1$};           % G1
+    \node[circle, draw, inner sep=1.5pt, right=of G1] (sum2) {};  % 合流点2
+    \node[block, right=of sum2] (G2) {$G_2$};           % G2
+    \node[circle, fill=black, inner sep=1.5pt, right=of G2] (branch) {}; % 分岐点
+    \node at ($(branch)+(1.2,0)$) (Y) {$Y$};             % Y（制御量）
+  
+    % --- 上下ノード ---
+    \node at ($(sum2)+(0,1.5)$) (D) {$D$};               % D（外乱）
+    \node[block, below=1.0cm of sum2] (H1) {$H_1$};      % H1（下）
+  
+    % === 経路 ===
+    \draw[->] (R) -- (G3);
+    \draw[->] (G3) -- (sum1);
+    \draw[->] (sum1) -- (G1);
+    \draw[->] (G1) -- (sum2);
+    \draw[->] (sum2) -- (G2);
+    \draw[->] (G2) -- (branch);
+    \draw[->] (branch) -- (Y);
+  
+    \draw[->] (D) -- (sum2);            % D → 合流点2
+    \draw[->] (branch) |- (H1);         % 分岐 → H1（下）
+    \draw[->] (H1) -| (sum1);           % H1 → 合流点1（戻る）
+  
+    % --- 加算記号配置 ---
+    \node at ($(sum1)+(-0.3,0.3)$) {\small $+$};
+    \node at ($(sum1)+(-0.3,-0.3)$) {\small $-$};
+    \node at ($(sum2)+(-0.3,0.3)$) {\small $+$};
+    \node at ($(sum2)+(-0.3,-0.3)$) {\small $+$};
+  
+\end{tikzpicture}

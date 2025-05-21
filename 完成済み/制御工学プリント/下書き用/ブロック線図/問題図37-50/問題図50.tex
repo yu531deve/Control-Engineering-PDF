@@ -1,0 +1,46 @@
+% --------------- [50] ---------------
+\begin{tikzpicture}[auto, node distance=0.8cm and 0.8cm, >=Latex]
+
+    % --- 横並びの主系列ノード ---
+    \node at (0,0) (input) {};
+    \node[circle, draw, inner sep=1.5pt, right=of input] (sum1) {};         % 合流1
+    \node[block, right=of sum1] (G1) {$G_1$};
+    \node[circle, draw, inner sep=1.5pt, right=of G1] (sum2) {};            % 合流2
+    \node[block, right=of sum2] (G2) {$G_2$};
+    \node[circle, fill=black, inner sep=1.5pt, right=of G2] (branch1) {};   % 分岐1
+    \node[block, right=of branch1] (G3) {$G_3$};
+    \node[circle, fill=black, inner sep=1.5pt, right=of G3] (branch2) {};   % 分岐2
+    \node[right=of branch2] (output) {};
+  
+    % --- 合流3（sum1の下） ---
+    \node[circle, draw, inner sep=1.5pt, below=0.7cm of sum1] (sum3) {};    % 合流3
+  
+    % === 経路 ===
+    \draw[->] (input) -- (sum1);
+    \draw[->] (sum1) -- (G1);
+    \draw[->] (G1) -- (sum2);
+    \draw[->] (sum2) -- (G2);
+    \draw[->] (G2) -- (branch1);
+    \draw[->] (branch1) -- (G3);
+    \draw[->] (G3) -- (branch2);
+    \draw[->] (branch2) -- (output);
+  
+    \draw[->] (branch1) |- (sum3);      % 分岐1 → 合流3
+    \draw[->] (sum3) -- (sum1);         % 合流3 → 合流1
+  
+    \draw[->] (branch2) |- ++(0,-1.5) -| (sum3);   % 分岐2 → 合流3（下経路）
+    \draw[->] (branch2) |- ++(0,1.2) -| (sum2);    % 分岐2 → 合流2（上経路）
+  
+    % --- 加算記号配置 ---
+    \node at ($(sum1)+(-0.3,0.3)$) {\small $+$};
+    \node at ($(sum1)+(-0.3,-0.3)$) {\small $-$};
+    \node at ($(sum2)+(-0.3,0.3)$) {\small $+$};
+    \node at ($(sum2)+(0.3,0.3)$) {\small $-$};
+    \node at ($(sum3)+(0.3,0.3)$) {\small $+$};
+    \node at ($(sum3)+(-0.3,-0.3)$) {\small $+$};
+  
+    % --- その他記号配置 ---
+    \node at ($(sum1)+(-0.8,0.3)$) {\small $u$};
+    \node at ($(branch2)+(0.8,0.3)$) {\small $y$};
+  
+\end{tikzpicture}

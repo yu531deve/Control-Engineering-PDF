@@ -1,0 +1,54 @@
+% --------------- [45] ---------------
+\begin{tikzpicture}[auto, node distance=0.8cm and 1.0cm, >=Latex]
+
+    % === 上段主系列（横） ===
+    \coordinate (input1);
+    \node[circle, draw, inner sep=1.5pt, right=of input1] (sum1) {};           % 合流点1
+    \node[block, right=of sum1] (G1) {$G_1$};                                  % G1
+    \node[circle, fill=black, inner sep=1.5pt, right=of G1] (branch1) {};      % 分岐点1
+    \coordinate[right=of branch1] (output1);                                   % 出力1（描画しない）
+  
+    % === sum1の下：G4 → branch2（縦） ===
+    \node[block, below=0.6cm of sum1] (G4) {$G_4$};
+    \node[circle, fill=black, inner sep=1.5pt, below=0.6cm of G4] (branch2) {}; % 分岐点2
+  
+    % === branch1の下：G2 → sum2（縦） ===
+    \node[block, below=0.6cm of branch1] (G2) {$G_2$};
+    \node[circle, draw, inner sep=1.5pt, below=0.6cm of G2] (sum2) {};          % 合流点2
+  
+    % === 下段横系列：output2 ← branch2 ← G3 ← sum2 ← input2 ===
+    \coordinate[left=of branch2] (output2);
+    \node[block, right=of branch2] (G3) {$G_3$};
+    \coordinate[right=of G3] (sum2_right);
+    \coordinate[right=of sum2_right] (input2);
+  
+    % === 経路 ===
+    \draw[->] (input1) -- (sum1);             % input1 → sum1
+    \draw[->] (sum1) -- (G1);                 % sum1 → G1
+    \draw[->] (G1) -- (branch1);              % G1 → branch1
+    \draw[->] (branch1) -- (output1);         % branch1 → output1
+  
+    \draw[->] (input2) -- (sum2);       % input2 → sum2（右から）
+    \draw[->] (sum2_right) -- (G3);           % → G3
+    \draw[->] (G3) -- (branch2);              % G3 → branch2
+    \draw[->] (branch2) -- (output2);         % branch2 → output2
+  
+    \draw[->] (branch1) -- (G2);              % 分岐1 → G2
+    \draw[->] (G2) -- (sum2);                 % G2 → 合流2
+  
+    \draw[->] (branch2) -- (G4);              % 分岐2 → G4
+    \draw[->] (G4) -- (sum1);                 % G4 → 合流1
+  
+    % === 加算記号 ===
+    \node at ($(sum1)+(-0.3,0.3)$) {\small $+$};
+    \node at ($(sum1)+(-0.3,-0.3)$) {\small $-$};
+    \node at ($(sum2)+(0.3,0.3)$) {\small $-$};
+    \node at ($(sum2)+(0.3,-0.3)$) {\small $+$};
+
+    % === その他記号 ===
+    \node at ($(sum1)+(-1.0,0.3)$) {\small $a_1(s)$};
+    \node at ($(branch1)+(1.0,0.3)$) {\small $b_1(s)$};
+    \node at ($(sum2)+(1.0,-0.3)$) {\small $a_2(s)$};
+    \node at ($(branch2)+(-1.0,0.3)$) {\small $b_2(s)$};
+  
+\end{tikzpicture}

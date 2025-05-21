@@ -1,0 +1,48 @@
+% --------------- [48] ---------------
+\begin{tikzpicture}[auto, node distance=0.8cm and 1.2cm, >=Latex]
+
+    % --- 横並びの主系列ノード ---
+    \node at (0,0) (input) {};
+    \node[circle, draw, inner sep=1.5pt, right=of input] (sum1) {};           % 合流点1
+    \node[block, right=of sum1] (G1) {$G_1$};
+    \node[circle, draw, inner sep=1.5pt, right=of G1] (sum2) {};             % 合流点2
+    \node[block, right=of sum2] (G2) {$G_2$};
+    \node[circle, fill=black, inner sep=1.5pt, right=of G2] (branch1) {};    % 分岐点1
+    \node[right=of branch1] (output) {};                                     % 出力
+
+    % --- 下部ノード配置 ---
+    \node[circle, fill=black, inner sep=1.5pt, below=1.0cm of branch1] (branch2) {}; % 分岐点2
+    \node[block, left=1.8cm of branch2] (H2) {$H_2$};                                 % H2
+    \node[block, below=1.2cm of G1] (H1) {$H_1$};                                     % H1（H2より下）
+
+    % === 主系列経路 ===
+    \draw[->] (input) -- (sum1);
+    \draw[->] (sum1) -- (G1);
+    \draw[->] (G1) -- (sum2);
+    \draw[->] (sum2) -- (G2);
+    \draw[->] (G2) -- (branch1);
+    \draw[->] (branch1) -- (output);
+
+    % === 追加経路 ===
+    % 分岐1 → 分岐2（真下）
+    \draw[->] (branch1) -- (branch2);
+
+    % 分岐2 → H2 → 合流点2（カクカク：左→上→右）
+
+    \draw[->] (branch2) -- (H2);
+    \draw[->] (H2) -| (sum2);
+
+    % 分岐2 → H1 → 合流点1（カクカク：下→左→上）
+    \draw[->] (branch2) |- (H1) -| (sum1);
+
+    % --- 加算記号配置 ---
+    \node at ($(sum1)+(-0.3,0.3)$) {\small $+$};
+    \node at ($(sum1)+(-0.3,-0.3)$) {\small $-$};
+    \node at ($(sum2)+(-0.3,0.3)$) {\small $+$};
+    \node at ($(sum2)+(-0.3,-0.3)$) {\small $-$};
+
+    % --- その他記号配置 ---
+    \node at ($(sum1)+(-1.0,0.3)$) {\small $R(s)$};
+    \node at ($(branch1)+(1.0,0.3)$) {\small $C(s)$};
+
+\end{tikzpicture}

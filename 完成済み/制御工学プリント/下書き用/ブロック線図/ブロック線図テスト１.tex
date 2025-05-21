@@ -1,0 +1,28 @@
+\begin{tikzpicture}[auto, node distance=1.2cm and 1.6cm, >=Latex]
+
+    % --- ノード定義 ---
+    \node[input] (input) {};
+    \node[circle, fill=black, inner sep=1.5pt, right=of input] (branch) {};     % 分岐点
+    \node[block, right=of branch] (G1) {$G_1$};
+    \node[block, right=of G1] (G2) {$G_2$};
+    \node[circle, draw, inner sep=1.5pt, right=of G2] (sum) {};                % 合流点
+    \node[output, right=of sum] (output) {};
+
+    \node[block, below=0.8cm of $(G1)!0.5!(G2)$] (G3) {$G_3$};                 % G3（下）
+
+    % --- 線描画 ---
+    \draw[->] (input) -- (branch);
+    \draw[->] (branch) -- (G1);
+    \draw[->] (G1) -- (G2);
+    \draw[->] (G2) -- (sum);
+    \draw[->] (sum) -- (output);
+
+    \draw[->] (branch) |- (G3);
+    \draw[->] (G3) -| (sum);
+
+    % --- 加算記号 ---
+    \node at ($(sum)+(-0.3,0.3)$) {\small $+$};
+    \node at ($(sum)+(-0.3,-0.3)$) {\small $+$};
+
+\end{tikzpicture}
+

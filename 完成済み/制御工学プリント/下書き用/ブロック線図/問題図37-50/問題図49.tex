@@ -1,0 +1,60 @@
+% --------------- [49] ---------------
+\begin{tikzpicture}[auto, node distance=0.8cm and 0.8cm, >=Latex]
+
+    % --- 横並び：主系列ノード ---
+    \node at (0,0) (input) {};
+    \node[circle, draw, inner sep=1.5pt, right=of input] (sum1) {};         % 合流1
+    \node[block, right=of sum1] (G1) {$G_1$};
+    \node[circle, draw, inner sep=1.5pt, right=of G1] (sum2) {};            % 合流2
+    \node[block, right=of sum2] (G2) {$G_2$};
+    \node[circle, draw, inner sep=1.5pt, right=of G2] (sum3) {};            % 合流3
+    \node[block, right=of sum3] (G3) {$G_3$};
+    \node[circle, fill=black, inner sep=1.5pt, right=of G3] (branch1) {};   % 分岐1
+    \node[block, right=of branch1] (G4) {$G_4$};
+    \node[circle, fill=black, inner sep=1.5pt, right=of G4] (branch2) {};   % 分岐2
+    \node[right=of branch2] (output) {};
+
+    % --- 上・下ノード配置 ---
+    \node[block, above=0.7cm of sum3] (H2) {$H_2$};                       % 合流3の上：H2
+    \node[circle, fill=black, inner sep=1.5pt, below=1.0cm of branch2] (branch3) {}; % 分岐3
+    \node[block, left=2.4cm of branch3] (H3) {$H_3$};                     % 分岐3の左
+    \node[block, below=1.5cm of sum3] (H1) {$H_1$};                       % 合流3の下（H3より下）
+
+    % === 主経路 ===
+    \draw[->] (input) -- (sum1);
+    \draw[->] (sum1) -- (G1);
+    \draw[->] (G1) -- (sum2);
+    \draw[->] (sum2) -- (G2);
+    \draw[->] (G2) -- (sum3);
+    \draw[->] (sum3) -- (G3);
+    \draw[->] (G3) -- (branch1);
+    \draw[->] (branch1) -- (G4);
+    \draw[->] (G4) -- (branch2);
+    \draw[->] (branch2) -- (output);
+
+    % === 分岐ルート ===
+    \draw[->] (branch1) |- (H2);              % 分岐1 → H2
+    \draw[->] (H2) -| (sum2);                 % H2 → 合流2
+
+    \draw[->] (branch2) -- (branch3);         % 分岐2 → 分岐3
+    \draw[->] (branch3) -- (H3);              % 分岐3 → H3
+    \draw[->] (H3) -| (sum3);                 % H3 → 合流3
+
+    \draw[->] (branch3) |- (H1);              % 分岐3 → H1（下）
+    \draw[->] (H1) -| (sum1);                 % H1 → 合流1
+
+    % --- 加算記号配置 ---
+    \node at ($(sum1)+(-0.3,0.3)$) {\small $+$};
+    \node at ($(sum1)+(-0.3,-0.3)$) {\small $-$};
+
+    \node at ($(sum2)+(-0.3,0.3)$) {\small $+$};
+    \node at ($(sum2)+(+0.3,+0.3)$) {\small $-$};
+
+    \node at ($(sum3)+(-0.3,0.3)$) {\small $+$};
+    \node at ($(sum3)+(-0.3,-0.3)$) {\small $-$};
+
+    % --- その他記号配置 ---
+    \node at ($(sum1)+(-1.0,0.3)$) {\small $R(s)$};
+    \node at ($(branch2)+(1.0,0.3)$) {\small $C(s)$};
+
+\end{tikzpicture}

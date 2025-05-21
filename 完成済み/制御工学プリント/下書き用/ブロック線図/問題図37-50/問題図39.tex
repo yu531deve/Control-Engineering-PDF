@@ -1,0 +1,47 @@
+% --------------- [39] ---------------
+\begin{tikzpicture}[auto, node distance=1.0cm and 1.8cm, >=Latex]
+
+    % --- 上段ノード ---
+    \node[input] (input) {};
+    \node[circle, draw, inner sep=1.5pt, right=of input] (sum1) {};              % 合流点①
+    \node[block, right=of sum1] (G) {$G$};                                       % G
+    \node[circle, fill=black, inner sep=1.5pt, right=of G] (branch1) {};         % 分岐点①
+    \node[output, right=of branch1] (output) {};                                 % 出力
+
+    % --- H₁・H₂ 縦並び（Gの真下） ---
+    \node[block, below=1.0cm of G] (H1) {$H_1$};
+    \node[block, below=0.5cm of H1] (H2) {$H_2$};
+    \coordinate (midH) at ($(H1)!0.5!(H2)$);
+
+    % --- 分岐点②（右）：H₁とH₂の中間、高さmidH、X位置はGとbranch1の中間よりやや右
+    \path (G) -- (branch1) coordinate[pos=0.6] (betweenGB);
+    \node[circle, fill=black, inner sep=1.5pt] at ($(midH)+(betweenGB)-(G)+(0.3,0)$) (branch2) {}; % 分岐点②
+
+    % --- 合流点②（左）：midH高さ、X位置はHₛとGの中間
+    \node[block, below=0.5cm of sum1] (Hs) {$H_s$};                              % H_s
+    \path (sum1) -- (G) coordinate[pos=0.5] (leftX);
+    \node[circle, draw, inner sep=1.5pt] at ($(midH)+(leftX)-(G)+(-0.3,0)$) (sum2) {};  % 合流点②
+
+    % === 経路 ===
+    \draw[->] (input) -- (sum1);
+    \draw[->] (sum1) -- (G);
+    \draw[->] (G) -- (branch1);
+    \draw[->] (branch1) -- (output);
+
+    \draw[->] (branch1) |- (branch2);                 % 分岐1 → 分岐2
+    \draw[->] (branch2) |- (H1);                      % 分岐2 → H1（上方向）
+    \draw[->] (branch2) |- (H2);                      % 分岐2 → H2（下方向）
+
+    \draw[->] (H1) -| (sum2);                         % H1 → 合流2
+    \draw[->] (H2) -| (sum2);                         % H2 → 合流2
+
+    \draw[->] (sum2) -| (Hs);                         % 合流2 → Hs
+    \draw[->] (Hs) -- (sum1);                         % Hs → 合流1（フィードバック）
+
+    % --- 加算記号（揃え済） ---
+    \node at ($(sum1)+(-0.3,0.3)$) {\small $+$};
+    \node at ($(sum1)+(-0.3,-0.3)$) {\small $-$};
+    \node at ($(sum2)+(0.3,0.3)$) {\small $+$};
+    \node at ($(sum2)+(0.3,-0.3)$) {\small $-$};
+
+\end{tikzpicture}

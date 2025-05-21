@@ -1,0 +1,59 @@
+% --------------- [42] ---------------
+\begin{tikzpicture}[auto, node distance=0.8cm and 1.0cm, >=Latex]
+
+    % --- 上段：主系列ノード ---
+    \node at (0,0) (input) {};
+    \node[circle, draw, inner sep=1.5pt, right=of input] (sum1) {};               % 合流1
+    \node[circle, fill=black, inner sep=1.5pt, right=of sum1] (branch1) {};       % 分岐1
+    \node[block, right=of branch1] (G1) {$G_1$};                                   % G1
+  
+    % --- 縦系列：G2〜G4 ---
+    \node[block, below=0.6cm of G1] (G2) {$G_2$};
+    \node[block, below=0.6cm of G2] (G3) {$G_3$};
+    \node[block, below=0.6cm of G3] (G4) {$G_4$};
+  
+    % --- G1とG2の中間に sum2 → branch2 → output ---
+    \coordinate (mid12) at ($(G1)!0.5!(G2)$);
+    \node[circle, draw, inner sep=1.5pt] at ($(mid12)+(2.0,0)$) (sum2) {};        % 合流2
+    \node[circle, fill=black, inner sep=1.5pt, right=of sum2] (branch2) {};       % 分岐2
+    \node[right=of branch2] (output) {};
+  
+    % --- G3とG4の中間に branch3 ---
+    \coordinate (mid34) at ($(G3)!0.5!(G4)$);
+    \node[circle, fill=black, inner sep=1.5pt] at ($(mid34)+(2.0,0)$) (branch3) {}; % 分岐3
+  
+% --- branch1の下かつG3の左に合流3 ---
+\node[circle, draw, inner sep=1.5pt, left=of G3] (sum3) {};% 合流3
+    
+    % === 経路 ===
+    \draw[->] (input) -- (sum1);
+    \draw[->] (sum1) -- (branch1);
+    \draw[->] (branch1) -- (G1);
+    \draw[->] (G1) -| (sum2);
+    \draw[->] (sum2) -- (branch2);
+    \draw[->] (branch2) -- (output);
+  
+    \draw[->] (branch1) |- (G2);
+    \draw[->] (G2) -| (sum2);
+  
+    \draw[->] (branch2) |- (branch3);
+    \draw[->] (branch3) |- (G3);
+    \draw[->] (G3) -- (sum3);
+    \draw[->] (sum3) -| (sum1);
+  
+    \draw[->] (branch3) |- (G4);
+    \draw[->] (G4) -| (sum3);
+  
+    % --- 加算記号 ---
+    \node at ($(sum1)+(-0.3,0.3)$) {\small $+$};
+    \node at ($(sum1)+(-0.3,-0.3)$) {\small $-$};
+    \node at ($(sum2)+(-0.3,0.3)$) {\small $+$};
+    \node at ($(sum2)+(-0.3,-0.3)$) {\small $+$};
+    \node at ($(sum3)+(-0.3,-0.3)$) {\small $-$};
+    \node at ($(sum3)+(0.3,-0.3)$) {\small $+$};
+
+    % --- その他記号 ---
+    \node at ($(input)+(0.3,0.3)$) {\small $a$};
+    \node at ($(output)+(-0.3,0.3)$) {\small $b$};
+
+\end{tikzpicture}

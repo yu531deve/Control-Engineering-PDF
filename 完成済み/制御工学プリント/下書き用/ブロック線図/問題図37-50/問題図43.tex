@@ -1,0 +1,30 @@
+% --------------- [43] ---------------
+\begin{tikzpicture}[auto, node distance=0.8cm and 1.0cm, >=Latex]
+
+    % --- 横並びノード ---
+    \node[circle, draw, inner sep=1.5pt] (sum) {};                  % 合流点
+    \node[block, right=of sum] (G) {$G(s)$};                        % G(s)
+    \node[circle, fill=black, inner sep=1.5pt, right=of G] (branch) {};  % 分岐点
+  
+    % --- 下段ノード ---
+    \node[block, below=0.6cm of G] (H) {$H(s)$};                    % H(s)
+  
+    % --- 経路 ---
+    \draw[->] ++(-1.2,0) -- (sum);              % input → 合流点
+    \draw[->] (sum) -- (G);                     % 合流点 → G(s)
+    \draw[->] (G) -- (branch);                  % G(s) → 分岐点
+    \draw[->] (branch) -- ++(1.0,0);            % 分岐点 → output
+  
+    \draw[->] (branch) |- (H);                  % 分岐点 → H(s)
+    \draw[->] (H) -| (sum);                     % H(s) → 合流点
+  
+    % --- 加算記号 ---
+    \node at ($(sum)+(-0.3,0.3)$) {\small $+$};
+    \node at ($(sum)+(-0.3,-0.3)$) {\small $-$};
+  
+    % --- その他記号 ---
+    \node at ($(sum)+(-0.9,0.3)$) {\small $a(s)$};
+    \node at ($(sum)+(0.5,0.3)$) {\small $\varepsilon(s)$};
+    \node at ($(branch)+(0.5,0.3)$) {\small $b(s)$};
+    \node at ($(sum)+(-0.4,-0.9)$) {\small $c(s)$};
+\end{tikzpicture}

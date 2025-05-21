@@ -1,0 +1,123 @@
+\documentclass[a4paper,12pt]{article}
+%\documentclass[fleqn]{article}
+
+% ---パッケージ---
+\usepackage{amsmath,amssymb}    %数式用
+\usepackage{tcolorbox}   %囲み枠用（tcolorboxに変更）
+\usepackage{geometry}   %余白調節
+\usepackage{tikz}  % ← 図を描くためのTikZパッケージ
+\geometry{margin=25mm}  %余白を少し狭く
+\usetikzlibrary{decorations.pathmorphing,patterns,positioning,arrows.meta} % バネ・壁の模様
+\tikzset{
+  block/.style = {draw, rectangle, minimum height=2em, minimum width=3em},
+  sum/.style = {draw, circle, inner sep=0pt, minimum size=5mm},
+  input/.style = {coordinate},
+  output/.style = {coordinate}
+}
+\usetikzlibrary{calc}
+
+
+
+
+% --- 日本語用パッケージ ---
+\usepackage{luatexja}         % 日本語表示に必要
+\usepackage{luatexja-fontspec} % フォント指定用
+
+% --- フォント指定（Overleaf標準フォント）---
+\setmainjfont{IPAexMincho}  % 明朝体
+%\setmainjfont{IPAexGothic}  % ゴシック体にしたい場合
+
+% --- tcolorbox の設定 ---
+\tcbset{
+    colframe=black,
+    colback=white,         % 本文の背景（白）
+    boxrule=0.8pt,
+    arc=3pt,
+    outer arc=3pt,
+    boxsep=4pt,
+    coltitle=black,
+    colbacktitle=gray!20,  % タイトルの背景（グレー）
+    fonttitle=\normalsize
+}
+
+\begin{document}
+
+
+% --------------- [37] ---------------
+37
+\begin{center}
+    \input{"問題図37.tex"}
+\end{center}
+
+% --------------- [38] ---------------
+38
+\begin{center}
+    \input{"問題図38.tex"}
+\end{center}
+
+% --------------- [39] ---------------
+39
+\begin{center}
+    \input{"問題図39.tex"}
+\end{center}
+
+% --------------- [40] ---------------
+40
+\begin{center}
+    \input{"問題図40.tex"}
+\end{center}
+% --------------- [41] ---------------
+41
+\begin{center}
+    \input{"問題図41.tex"}
+\end{center}
+
+\newpage
+
+% --------------- [42] ---------------
+42
+\begin{center}
+    \input{"問題図42.tex"}
+\end{center}
+
+% --------------- [43] ---------------
+43
+\begin{center}
+    \input{"問題図43.tex"}
+\end{center}
+% --------------- [44] ---------------
+44
+\begin{center}
+    \input{"問題図44.tex"}
+\end{center}
+% --------------- [45] ---------------
+45
+\begin{center}
+    \input{"問題図45.tex"}
+\end{center}
+% --------------- [46] ---------------
+46
+\begin{center}
+    \input{"問題図46.tex"}
+\end{center}
+% --------------- [47] ---------------
+47
+\begin{center}
+    \input{"問題図47.tex"}
+\end{center}
+% --------------- [48] ---------------
+48
+\begin{center}
+    \input{"問題図48.tex"}
+\end{center}
+% --------------- [49] ---------------
+49
+\begin{center}
+    \input{"問題図49.tex"}
+\end{center}
+% --------------- [50] ---------------
+50
+\begin{center}
+    \input{"問題図50.tex"}
+\end{center}
+\end{document}

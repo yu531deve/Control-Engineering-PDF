@@ -1,0 +1,735 @@
+%!TEX program = xelatex
+\documentclass[a4paper,12pt]{report}
+\usepackage{xeCJK}  % 日本語対応パッケージ
+% IPAexMincho をメインフォントとして、BoldFont として同じフォントに FakeBold を適用
+\setCJKmainfont[BoldFont={IPAexMincho}, BoldFeatures={FakeBold=2}]{IPAexMincho}
+
+\usepackage{amsmath, amssymb}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning}
+\usepackage{geometry}
+\geometry{a4paper, margin=2cm}
+\usepackage{lmodern}
+\usepackage{sectsty}
+
+% 章・節見出しを太字に（FakeBold により擬似太字になります）
+\allsectionsfont{\normalfont\bfseries}
+
+\title{ヘヴィサイドの展開定理}
+\author{作成者: Yudai }
+\date{\today}
+
+\begin{document}
+
+%========== 表紙 ==========
+\begin{titlepage}
+    \centering
+    \vspace*{5cm}
+    {\Huge\bfseries ヘヴィサイドの展開定理\par}
+    \vspace{2cm}
+    {\Large 作成者: Yudai \par}
+    \vfill
+    {\Large \today\par}
+\end{titlepage}
+%========== 表紙 終了 ==========
+
+\tableofcontents
+\newpage
+
+%はじめに
+\chapter{はじめに}
+
+\indent
+
+本定理を利用することで、複雑な有理関数の逆ラプラス変換を容易に行うことができる。
+特に、工学系の初学者にとっては、時間領域での応答解析を行う上で、部分分数分解の計算ミスが致命的になる場面も多く、
+正確で効率的な方法を身に付けることが望まれる。\\
+
+通常、部分分数分解には係数比較法が用いられるが、この手法では連立方程式の計算を避けられず、
+手間と時間がかかるだけでなく、記号の取り違いや符号ミスなどの人為的な誤りも起こりやすい。
+その点、ヘヴィサイドの展開定理は、各極に対して独立に係数を求められるという特性を持ち、手続きがパターン化しやすく、検算も容易である。\\
+
+また、本定理は単純極に対して適用されるものであるが、重根や複素極を含む場合にも適用可能な形へと拡張することで、
+実用的な範囲を大きく広げることができる。加えて、複雑な有理式でも、因数の形状に応じて部分的にヘヴィサイドを使い、
+残りを係数比較法で処理するというハイブリッド的な手法も実用に耐える。\\
+
+本資料では、まず定理の定義および直感的理解からはじめ、代表的なパターン別に具体例を用いて計算手順を詳述する。
+さらに、理解を助けるために計算フローを図解し、最後に演習問題を多数掲載している。これにより、\\
+読者が自力で素早く部分分数分解を行えることを目指す。\\
+
+制御工学は抽象的な理論体系であるが、その多くはラプラス変換という一つの変換操作に基づいて時間軸から周波数軸への写像を通して記述される。
+その橋渡しとして、部分分数分解とその解法は重要な位置づけを持つ。本資料が、読者の計算技術の向上と理解の深化に資することを願うものである。\\
+
+
+
+%========== 第1章 ==========
+\chapter{定義}
+ヘヴィサイドの展開定理は、ラプラス変換の逆変換を求める際に部分分数分解を行うための有用な定理である。特に、分母の因子がすべて一重（単純極）である場合に適用できる。\\[1ex]
+一般に、ラプラス変換関数が
+\[
+F(s) = \frac{N(s)}{(s-p_1)(s-p_2)\cdots(s-p_n)}
+\]
+と表されるとき、各分数項の係数 \(A_k\) は
+\[
+A_k = \lim_{s\to p_k}\Bigl\{(s-p_k)F(s)\Bigr\}\quad (k=1,2,\dots,n)
+\]
+と求められ、部分分数展開は
+\[
+F(s) = \sum_{k=1}^{n}\frac{A_k}{s-p_k}
+\]
+と書くことができる。これにより、逆ラプラス変換は各項に対して
+\[
+\mathcal{L}^{-1}\Bigl\{\frac{1}{s-p_k}\Bigr\} = e^{p_k t}
+\]
+の形で表すことができる。
+
+\newpage
+
+%========== 第2章 ==========
+\chapter{簡単な理解}
+定義を理解して利用するのは面倒なので，簡単な理解により，実用的なものを紹介する．\\
+直感的には，ヘヴィサイドの展開定理は「カバーアップ法」とも呼ばれる方法に基づいている。各極の寄与を個別に求めるため、その極に対応する因子を一時的に除外し、残りの部分に極の値を代入して係数を求めます。この方法により、複雑なラプラス変換の逆変換問題が単純な指数関数の和に分解され、解析が容易になる。\\
+
+\vspace{2mm}
+
+まず初めに係数比較法とヘヴィサイドの展開定理を利用した解法（以下、ヘヴィサイドの展開定理と省略する。）の２解法で解いてみる。
+
+\vspace{6mm}
+
+%========例１===========
+(\MakeUppercase{\romannumeral 1})\(F(s) =  \frac{2}{s(s+1)}\)を部分分数分解せよ．
+
+\vspace{6mm}
+
+\noindent
+\begin{minipage}[t]{0.35\linewidth}
+  \quad (\romannumeral 1) 係数比較法
+  
+  \begin{align*}
+    \frac{2}{s(s+1)} &= \frac{A}{s} + \frac{B}{s+1}
+  \end{align*}
+  
+  両辺に \(s(s+1)\) を掛けると
+  \[
+  2 = A(s+1) + Bs
+  \]
+  展開すると
+  \[
+  2 = (A+B)s + A
+  \]
+  よって係数比較より、
+  \[
+  \begin{cases}
+  A+B = 0,\\[1ex]
+  A = 2,
+  \end{cases}
+  \]
+  すなわち \(A=2,\; B=-2\)
+
+  結果，
+  \[
+  \frac{2}{s(s+1)} = \frac{2}{s} - \frac{2}{s+1}.
+  \]
+\end{minipage}%
+\hfill
+\vrule width 1pt
+\hfill
+\begin{minipage}[t]{0.55\linewidth}
+  \quad (\romannumeral 2) ヘヴィサイドの展開定理
+  
+  \begin{align*}
+    F(s) &= \frac{2}{s(s+1)} \\
+        &= \frac{1}{s}\left.\Bigl[sF(s)\Bigr]\right|_{s=0} 
+            + \frac{1}{s+1}\left.\Bigl[(s+1)F(s)\Bigr]\right|_{s=-1}\\
+        &= \frac{1}{s}\left.\Bigl[\frac{2}{s+1}\Bigr]\right|_{s=0} 
+            + \frac{1}{s+1}\left.\Bigl[\frac{2}{s}\Bigr]\right|_{s=-1}\\
+        &= \frac{1}{s}\cdot(2) 
+            + \frac{1}{s+1}\cdot(-2)\\
+        &= \frac{2}{s}
+            - \frac{2}{s+1}\\
+  \end{align*}
+
+\end{minipage}
+
+\newpage
+
+%========例2===========
+(\MakeUppercase{\romannumeral 2})\(F(s) =  \frac{s^2-s+2}{s(s+3)(s-4)}\)を部分分数分解せよ．
+
+\vspace{6mm}
+
+
+  \quad (\romannumeral 1) 係数比較法
+  
+  \begin{align*}
+    \frac{s^2-s+2}{s(s+3)(s-4)} &= \frac{A}{s} + \frac{B}{s+3} + \frac{C}{s-4}
+  \end{align*}
+  
+  両辺に \(s(s+3)(s-4)\) を掛けると
+  \begin{align*}
+  &s^2 - s + 2 \\
+  = &A(s+3)(s-4) + Bs(s-4) + Cs(s+3).
+  \end{align*}
+  
+  展開すると
+  \begin{align*}
+  &s^2-s+2 \\
+  &= A(s^2-s-12) + B(s^2-4s) + C(s^2+3s).
+  \end{align*}
+  
+  すなわち
+  \begin{align*}
+  &s^2-s+2 \\
+  &= (A+B+C)s^2 + (-A-4B+3C)s -12A.
+  \end{align*}
+  
+  係数比較より、
+  \begin{align}
+    \left\{
+      \begin{aligned}
+        A + B + C &= 1 \\[1ex]
+        -A - 4B + 3C &= -1 \\[1ex]
+        -12A &= 2
+      \end{aligned}
+    \right. \notag \\[2ex]
+    \iff\quad
+    \left\{
+      \begin{aligned}
+        A &= -\tfrac{1}{6} \\[1ex]
+        B + C &= \tfrac{7}{6} \\[1ex]
+        4B - 3C &= \tfrac{7}{6}
+      \end{aligned}
+    \right. \notag \\[2ex]
+    \iff\quad
+    \left\{
+      \begin{aligned}
+        A &= -\tfrac{1}{6} \\[1ex]
+        B &= \tfrac{2}{3} \\[1ex]
+        C &= \tfrac{1}{2}
+      \end{aligned}
+    \right. \notag
+    \end{align}
+    
+
+  \quad (\romannumeral 2) ヘヴィサイドの展開定理
+  
+  \begin{align*}
+F(s) &= \frac{s^2-s+2}{\,s(s+3)(s-4)} \\
+      &= \frac{1}{s}\left.\Bigl[sF(s)\Bigr]\right|_{s=0} 
+          + \frac{1}{s+3}\left.\Bigl[(s+3)F(s)\Bigr]\right|_{s=-3}
+          + \frac{1}{s-4}\left.\Bigl[(s-4)F(s)\Bigr]\right|_{s=4} \\
+      &= \frac{1}{s}\left.\Bigl[\frac{s^2-s+2}{(s+3)(s-4)}\Bigr]\right|_{s=0} 
+          + \frac{1}{s+3}\left.\Bigl[\frac{s^2-s+2}{s(s-4)}\Bigr]\right|_{s=-3}
+          + \frac{1}{s-4}\left.\Bigl[\frac{s^2-s+2}{s(s+3)}\Bigr]\right|_{s=4} \\[2mm]
+      &= \frac{1}{s}\cdot\left(-\frac{1}{6}\right)
+          + \frac{1}{s+3}\cdot\left(\frac{2}{3}\right)
+          + \frac{1}{s-4}\cdot\left(\frac{1}{2}\right) \\[2mm]
+      &= -\frac{1}{6s} + \frac{2}{3(s+3)} + \frac{1}{2(s-4)}\,
+\end{align*}
+
+\vspace{2mm}
+  \newpage
+  以上のように（\romannumeral 1）係数比較法と（\romannumeral 2）ヘヴィサイドの展開定理では解くスピードが違う。
+  （\romannumeral 2）ヘヴィサイドの展開定理に関しては，わかりやすさのために式変形を多めにしている．
+  しかし，実践では最初から最終行まで一気に計算できるので，実質一行で部分分数分解ができる．\\
+  
+  ここでヘヴィサイドの展開定理の利用法をまとめると，まず分母の各因数を分母として用意する．
+  その次にその因数を取り除いた\(F(s)\)を用意して，そこに因数がゼロになるようなｓを代入する。それがその分母の分子となる．
+  式でいうところの\(\left.\Bigl[sF(s)\Bigr]\right|_{s=0} \)などが\(s\)を分母とする分数の
+  分子である．
+  \begin{align*}
+    F(s) &= \frac{2}{s(s+1)} \\
+        &= \frac{1}{s}\left.\Bigl[sF(s)\Bigr]\right|_{s=0} 
+            + \frac{1}{s+1}\left.\Bigl[(s+1)F(s)\Bigr]\right|_{s=-1}\\
+        &= \frac{1}{s}\left.\Bigl[\frac{2}{s+1}\Bigr]\right|_{s=0} 
+            + \frac{1}{s+1}\left.\Bigl[\frac{2}{s}\Bigr]\right|_{s=-1}\\
+        &= \frac{1}{s}\cdot(2) 
+            + \frac{1}{s+1}\cdot(-2)\\
+        &= \frac{2}{s}
+            - \frac{2}{s+1}\\
+  \end{align*}
+  
+  このPDFでは，計算式の見栄えのために\(F(s)\)に因数をかけて数値を代入する手順をとっているが，
+  実践では\(F(s)\)の中の因数を指で隠してできた式に数値を代入して係数を求める．（この隠す動作からヘヴィサイドの目隠し法などと呼ぶ場合もある．）\\
+
+  次の章では部分分数分解のパターンに応じて、どのようにヘヴィサイドの展開定理を利用するかを考える．
+
+%============================= 第３章 =============================
+  \chapter{部分分数分解のパターン}
+
+  ラプラス変換で行う分数分解にはある程度パターンがあり，それによってヘヴィサイドの展開定理の使い方も変化する．
+  パターンは大きく分けて次の通り．\\
+
+
+  \quad (\MakeUppercase{\romannumeral 1}) 実数の範囲で一次式のみの因数分解ができるもの 
+    \[
+    \frac{1}{\left(s-1\right) \left(s-3\right)} \quad \frac{1}{\left(s-2\right)^2 \left(s-1\right)}
+    \]
+
+    \quad (\MakeUppercase{\romannumeral 2}) 実数の範囲で一次式と二次式を含む因数分解ができるもの \\
+    \[
+    \frac{1}{\left(s-1\right) \left(s^2+2s+2\right)} \quad \frac{1}{\left(s+1\right)^2 \left(s^2+2s+10\right)}
+    \]
+
+  \quad (\MakeUppercase{\romannumeral 3}) 実数の範囲で二次式のみの因数分解ができるもの \\
+    \[
+    \frac{1}{\left(s^2+1\right) \left(s^2+4\right)} 
+    \]
+
+    部分分数分解では，上記の形を満たさないものも存在するが，多くは上記３つの形に分類される．
+    (\MakeUppercase{\romannumeral 3})に関しては，頻出というわけではないが考え方次第で同様に簡単に解けるので付け足した，\\
+
+    %=============================パターン１=============================
+    (\MakeUppercase{\romannumeral 1}) 実数の範囲で一次式のみの因数分解ができるもの \\
+
+    \vspace{2mm}
+    ここではさらに以下のように２通りに場合分けする．\\
+
+    \qquad({\romannumeral 1}) 因数が累乗を含まない形 \\
+    \[
+    \frac{1}{\left(s-1\right) \left(s-3\right)} 
+    \]
+
+    \qquad({\romannumeral 2}) 因数が累乗を含む形 \\
+    \[
+    \frac{1}{\left(s-2\right)^2 \left(s-1\right)}
+    \]
+    
+    ({\romannumeral 1})はすでにChapter2で示した通りだが，複雑になる({\romannumeral 2})との比較用に再度示しておく．
+
+\newpage
+\quad({\romannumeral 1}) 因数が累乗を含まない形 \\
+
+\qquad \(F(s) =  \frac{6}{(s-1)(s-2)(s-3)}\)を部分分数分解せよ．
+\begin{align*}
+  \qquad F(s) &= \frac{6}{(s-1)(s-2)(s-3)} \\
+      &= \frac{1}{s-1}\left.\Bigl[(s-1)F(s)\Bigr]\right|_{s=1} 
+          + \frac{1}{s-2}\left.\Bigl[(s-2)F(s)\Bigr]\right|_{s=2}
+          + \frac{1}{s-3}\left.\Bigl[(s-3)F(s)\Bigr]\right|_{s=3}\\
+      &= \frac{1}{s-1}\left.\Bigl[\frac{6}{(s-2)(s-3)}\Bigr]\right|_{s=1} 
+          + \frac{1}{s-2}\left.\Bigl[\frac{6}{(s-1)(s-3)}\Bigr]\right|_{s=2}
+          + \frac{1}{s-3}\left.\Bigl[\frac{6}{(s-1)(s-2)}\Bigr]\right|_{s=3}\\
+      &= \frac{1}{s-1}\cdot(3) 
+          + \frac{1}{s-2}\cdot(-6)
+          + \frac{1}{s-3}\cdot(3)\\
+      &= \frac{3}{s-1} 
+      - \frac{6}{s-2}
+      + \frac{3}{s-3}\\
+\end{align*}
+
+  因数の数が増えれば増えるほど，係数比較法より簡単になる．\\
+
+\quad({\romannumeral 2}) 因数が累乗を含む形 \\
+
+\qquad \(F(s) =  \frac{s+2}{s^3(s-1)^2}\)を部分分数分解せよ．
+
+\begin{align*}
+  \qquad F(s) &= \frac{s+2}{s^3(s-1)^2} \\
+      &= \frac{A}{s^3}+ \frac{B}{s^2}+ \frac{C}{s}
+      + \frac{D}{(s-1)^2}+ \frac{E}{s-1}
+\end{align*}\\
+のように実数A,B,C,D,Eをおくと\\
+(ここでは分母の次数が大きいものから並べるとよい)\\
+\begin{align*}
+  A &= \frac{1}{0!}\left.\Bigl[s^3F(s)\Bigr]\right|_{s=0} = \left.\Bigl[\frac{s+2}{(s-1)^2}\Bigr]\right|_{s=0} = 2\\
+  B &= \frac{1}{1!}\left.\Bigl[\frac{d}{ds} \left\{s^3F(s)\right\}\Bigr]\right|_{s=0}
+    = \left.\Bigl[\frac{d}{ds} \left\{\frac{s+2}{(s-1)^2}\right\}\Bigr]\right|_{s=0}
+    = \left.\Bigl[\frac{-(s+5)}{(s-1)^3}\Bigr]\right|_{s=0} 
+    = 5 \\
+  C &=  \frac{1}{2!} \left.\Bigl[\frac{d^2}{ds^2} \left\{s^3F(s)\right\}\Bigr]\right|_{s=0} 
+    = \frac{1}{2} \left.\Bigl[\frac{d}{ds} \left\{\frac{-(s+5)}{(s-1)^3}\right\}\Bigr]\right|_{s=0}  
+    = \frac{1}{2} \left.\Bigl[\frac{-(s-1)^3+(s+5)\cdot3(s-1)^2}{(s-1)^6}\Bigr]\right|_{s=0} 
+    = 8\\
+  D &= \frac{1}{0!} \left.\Bigl[(s-1)^2F(s)\Bigr]\right|_{s=1}
+    = \left.\Bigl[\frac{s+2}{s^3}\Bigr]\right|_{s=1}
+    = 3\\
+  E &= \frac{1}{1!} \left.\Bigl[\frac{d}{ds}\left\{(s-1)^2F(s)\right\}\Bigr]\right|_{s=1}
+    = \left.\Bigl[\frac{d}{ds}\left\{\frac{s+2}{s^3}\right\}\Bigr]\right|_{s=1}
+    = \left.\Bigl[-\frac{2}{s^3}-\frac{6}{s^4}\Bigr]\right|_{s=1} 
+    = -8\\
+\end{align*}\\
+以上より
+\[
+  F(s) = \frac{2}{s^3} + \frac{5}{s^2}+ \frac{8}{s} + \frac{3}{(s-1)^2} - \frac{8}{s-1}\\
+\]
+\newpage
+
+考え方としては，まず初めに次数が一番大きいものからヘヴィサイドを利用していく．
+次に分母の次数が1つ下がった項の係数では，代入をする前に一度微分をしてから計算をする．
+そしてさらに分母の次数が1つ下がると同様に微分をして，さらに今まで微分をした回数の階乗で割る．
+解答例ではわかりやすさのために\(\frac{1}{s^3},\frac{1}{s^2}\)でも同様の手順を踏んでいるが，結局関係ないので実践では省略してもかまわない．
+また次のような例は再現性がないので推奨しない．（係数比較法の方がマシ）\\
+
+
+※悪い例
+\begin{align*}
+  \qquad F(s) &= \frac{s+2}{s^3(s-1)^2} \\
+      &= \frac{1}{s^3}\left.\Bigl[s^3F(s)\Bigr]\right|_{s=0} 
+          + \frac{1}{1! \cdot s^2}\left.\Bigl[\frac{d}{ds} \left\{s^3F(s)\right\}\Bigr]\right|_{s=0}
+          + \frac{1}{2! \cdot s}\left.\Bigl[\frac{d^2}{ds^2} \left\{s^3F(s)\right\}\Bigr]\right|_{s=0}\\
+      & \qquad \qquad \qquad \qquad \qquad \qquad 
+      + \frac{1}{(s-1)^2}\left.\Bigl[(s-1)^2F(s)\Bigr]\right|_{s=1}
+      + \frac{1}{s-1}\left.\Bigl[\frac{d}{ds}\left\{(s-1)^2F(s)\right\}\Bigr]\right|_{s=1}\\
+      &= \frac{1}{s^3}\left.\Bigl[\frac{s+2}{(s-1)^2}\Bigr]\right|_{s=0} 
+          + \frac{1}{s^2}\left.\Bigl[\frac{d}{ds} \left\{\frac{s+2}{(s-1)^2}\right\}\Bigr]\right|_{s=0}
+          + \frac{1}{2s}\left.\Bigl[\frac{d^2}{ds^2} \left\{\frac{s+2}{(s-1)^2}\right\}\Bigr]\right|_{s=0}\\
+      & \qquad \qquad \qquad \qquad \qquad \qquad 
+      + \frac{1}{(s-1)^2}\left.\Bigl[\frac{s+2}{s^3}\Bigr]\right|_{s=1}
+      + \frac{1}{1! \cdot (s-1)}\left.\Bigl[\frac{d}{ds}\left\{\frac{s+2}{s^3}\right\}\Bigr]\right|_{s=1}\\
+      &= \frac{1}{s^3}\cdot\frac{2}{(-1)^2}
+          + \frac{1}{s^2}\cdot \left.\Bigl[\frac{-(s+5)}{(s-1)^3}\Bigr]\right|_{s=0}
+          + \frac{1}{2s}\cdot \left.\Bigl[\frac{-(s-1)^3+(s+5)\cdot3(s-1)^2}{(s-1)^6}\Bigr]\right|_{s=0}\\
+      & \qquad \qquad \qquad \qquad \qquad \qquad 
+          + \frac{1}{(s-1)^2}\cdot \left.\Bigl[\frac{(s+2)}{s^3}\Bigr]\right|_{s=1}
+          + \frac{1}{s-1}\cdot \left.\Bigl[-\frac{2}{s^3}-\frac{6}{s^4}\Bigr]\right|_{s=1} \\
+      &= \frac{2}{s^3} 
+      + \frac{5}{s^2}
+      + \frac{8}{s}
+      + \frac{3}{(s-1)^2}
+      - \frac{8}{s-1}\\
+\end{align*}
+確かにヘヴィサイドの展開定理を利用しているが，微分で計算ミスがおこりやすいので例のように係数ごとに計算するか，係数比較法を用いた方がよいかもしれない．
+（特に今回は分母の因数に\(s\)があるので，係数比較法の計算は楽になっているはず．）
+
+\newpage
+
+%============================= パターン2 =============================
+    (\MakeUppercase{\romannumeral 2}) 実数の範囲で一次式と二次式を含む因数分解ができるもの \\
+
+    二次式を複素数の範囲で因数分解すればヘヴィサイドの展開定理を利用できる.\\
+
+
+\quad \(F(s) = \frac{s+1}{s\left(s^2+4s+8\right)} \) を部分分数分解せよ．
+
+\begin{align*}
+  \qquad F(s) &= \frac{s+1}{s \left(s^2+4s+8\right)} \\
+      &= \frac{s+1}{s \left\{(s+2)^2+4\right\}} \\
+      &= \frac{s+1}{s \left\{(s+2)+2j\right\}\left\{(s+2)-2j\right\}} \quad [\because j \text{は複素数単位}] \\
+      &= \frac{A}{s} 
+      + \frac{B}{(s+2)+2j}
+      + \frac{C}{(s+2)-2j}
+\end{align*}
+
+\qquad のように実数A,B,Cをおくと\\
+
+\begin{align*}
+  A &= \left.\Bigl[\frac{s+1}{\left\{(s+2)+2j\right\}\left\{(s+2)-2j\right\}}\Bigr]\right|_{s=0} = \frac{1}{8} \\
+  B &= \left.\Bigl[\frac{s+1}{s \left\{(s+2)-2j\right\}}\Bigr]\right|_{s=-(2+2j)}
+    = \frac{-1-2j}{-(2+2j)(-4j)}
+    = - \frac{1}{8} \cdot \frac{1+2j}{j-1}
+    = \frac{-1+3j}{16}\\
+  C &= \left.\Bigl[\frac{s+1}{s \left\{(s+2)+2j\right\}}\Bigr]\right|_{s=-(2-2j)}
+  = \frac{-1+2j}{-(2-2j) \cdot 4j}
+  = \frac{1}{8} \cdot \frac{1-2j}{j+1}
+  = \frac{-1-3j}{16}\\
+\end{align*}
+
+\qquad 以上より\\
+
+\begin{align*}
+  \qquad F(s) &=\frac{1}{s} \cdot \frac{1}{8} 
+              + \frac{1}{(s+2)+2j} \cdot \frac{-1+3j}{16}
+              + \frac{1}{(s+2)-2j} \cdot \frac{-1-3j}{16} \\
+              &=\frac{1}{8s} 
+              + \frac{1}{(s+2)^2+2^2} \cdot \frac{1}{16}
+              \Bigl[(-1+3j)\left\{(s+2)-2j\right\}
+              + (-1-3j)\left\{(s+2)+2j\right\}\Bigr] \\
+              &=\frac{1}{8s} 
+              +\frac{1}{16} \cdot \frac{-2s+8}{(s+2)^2+2^2} \\
+              &=\frac{1}{8s} 
+              -\frac{1}{8} \cdot \frac{s-4}{(s+2)^2+2^2} \\
+\end{align*}
+
+\quad しかしこれは有理化が面倒なため悪い例である．実践では次のページで紹介するように部分的にヘヴィサイドの展開定理を利用して，残りは係数比較法により解くとよい．
+
+\newpage
+
+～ヘヴィサイドの展開定理を部分的に用いる解法～
+
+\begin{align*}
+  \qquad F(s) &= \frac{s+1}{s \left(s^2+4s+8\right)} \\
+      &= \frac{1}{s} \cdot \left.\Bigl[\frac{s+1}{s^2+4s+8}\Bigr]\right|_{s=0}
+      + \frac{Bs+C}{s^2+4s+8} \\
+      &= \frac{1}{s} \cdot \frac{1}{8}
+      + \frac{Bs+C}{s^2+4s+8} \\
+      &=\frac{1}{8s(s^2+4s+8)} \cdot \left\{(s^2+4s+8)+8s(Bs+C) \right\} \\
+      &=\frac{(8B+1)s^2+(8C+4)s+8}{8s(s^2+4s+8)}
+\end{align*}
+
+分母の値に気を付けて係数比較をすると、
+\begin{align*}
+  \left\{
+    \begin{aligned}
+      8B + 1 &= 0 \\[1ex]
+      8C + 4 &= 8
+    \end{aligned}
+  \right. \notag \\[2ex]
+  \iff\quad
+  \left\{
+    \begin{aligned}
+      B &= - \frac{1}{8} \\[1ex]
+      C &=  \frac{1}{2}
+    \end{aligned}
+  \right. \notag \\
+  \end{align*}
+以上より
+\begin{align*}
+  \qquad F(s) &=\frac{1}{8s} + \frac{(-\frac{1}{8})s+\frac{1}{2}C}{s^2+4s+8} \\
+  &=\frac{1}{8s} -\frac{1}{8} \cdot \frac{s-4}{s^2+4s+8}
+\end{align*}
+
+このように係数比較法とヘヴィサイドの展開定理を利用する方法を適宜使い分けるとより早く解ける．
+受験などで利用する人らはこの程度の係数比較なら暗算で行い、見た目上は一行で部分分数分解できる．
+これはその人の計算能力にも依るので自分にあった方でといたほうが良い．\\
+
+ここまでヘヴィサイドの展開定理を使うことに固執する理由について，計算ミスの気づきやさがある．
+係数比較法ではすべての係数を連立する都合上，雪崩式にミスをしやすく，同じ係数比較法での検算でもそのミスに気づきにくい．
+一方でヘヴィサイドの展開定理では項ごとに係数の計算を行うのでどこかでミスをしても他の係数の計算に影響しにくい．
+これらの違いは些細なものかも知れないが，計算の早さなども考えればヘヴィサイドの展開定理を利用した方が合理的であろう．
+また、検算に関しては\(1\)や\(-1\)
+
+\newpage
+
+\quad (\MakeUppercase{\romannumeral 3}) 実数の範囲で二次式のみの因数分解ができるもの \\
+
+こちらも複素数の範囲内で因数分解すれば一次式のみの因数分解であり，ヘヴィサイドの展開定理を利用できるのだが，
+今回は見方を変えて\(s^2\)にそのまま\(-1\)や\(-4\)を代入してしまえば良い．\\
+
+    
+  \quad \(F(s) = \frac{1}{\left(s^2+1\right) \left(s^2+4\right)} \) を部分分数分解せよ．
+    
+  \begin{align*}
+    F(s) &= \frac{1}{(s^2+1)(s^2+4)} \\
+        &= \frac{1}{s^2+1}\left.\Bigl[\frac{1}{s^2+4}\Bigr]\right|_{s^2=-1} 
+            + \frac{1}{s^2+4}\left.\Bigl[\frac{1}{s^2+1}\Bigr]\right|_{s^2=-4}\\
+        &= \frac{1}{s^2+1} \cdot \frac{1}{3}
+            + \frac{1}{s^2+4} \cdot \left(-\frac{1}{3} \right)\\
+        &= \frac{1}{3(u+1)} 
+            - \frac{1}{3(s^2+4)} \\
+  \end{align*}
+
+  「このやり方は本当に正しいのか？」と疑問に思うかもしれないが，
+  \(s^2=u\)などとおけば，結局実数の範囲でヘヴィサイドの展開定理を用いたことに変わりない。
+
+  \begin{align*}
+    F(u) &= \frac{1}{(u+1)(u+4)} \\
+        &= \frac{1}{u+1}\left.\Bigl[\frac{1}{u+4}\Bigr]\right|_{u=-1} 
+            + \frac{1}{u+4}\left.\Bigl[\frac{1}{u+1}\Bigr]\right|_{u=-4}\\
+        &= \frac{1}{u+1} \cdot \frac{1}{3}
+            + \frac{1}{u+4} \cdot \left(-\frac{1}{3} \right)\\
+        &= \frac{1}{3(u+1)} 
+            - \frac{1}{3(u+4)} \\
+  \end{align*}
+
+
+%============================= 第章 =============================
+\chapter{フローチャート}
+以下は、ヘヴィサイドの展開定理を用いた逆ラプラス変換の判断手順を示すフローチャートである。
+
+\begin{center}
+\begin{tikzpicture}[node distance=10mm, >=latex, every node/.style={font=\normalsize}]
+  \tikzstyle{decision} = [diamond, draw, aspect=2, inner sep=1mm, minimum height=10mm]
+  \tikzstyle{block} = [rectangle, draw, minimum height=8mm, align=center]
+  \tikzstyle{arrow} = [->]
+
+  % ノード定義
+  \node[block] (start) {\(F(s)\)};
+  \node[decision, below=of start] (step1) {因数分解できる？};
+  \node[block, right=30mm of step1] (end1) {処理終了};
+  \node[decision, below=of step1] (step2) {分母は一次のみ？};
+  \node[block, right=30mm of step2] (end2) {ヘヴィサイドの展開定理};
+  \node[decision, below=of step2] (step3) {分母に二次が含まれる？};
+  \node[block, right=30mm of step3] (end3) {部分的にヘヴィサイド};
+  \node[decision, below=of step3] (step4) {\((s^2+A)(s^2+B)\) の形？};
+  \node[block, right=30mm of step4] (end4) {\(s^2=u\)とおいてヘヴィサイド};
+  \node[block, below=of step4] (end5) {係数比較};
+
+  % 矢印（縦）
+  \draw[arrow] (start) -- (step1);
+  \draw[arrow] (step1) -- node[midway, left] {No} (step2);
+  \draw[arrow] (step2) -- node[midway, left] {No} (step3);
+  \draw[arrow] (step3) -- node[midway, left] {No} (step4);
+  \draw[arrow] (step4) -- node[midway, left] {No} (end5);
+
+  % 矢印（Yes分岐）
+  \draw[arrow] (step1.east) -- ++(5mm,0) node[midway, above] {Yes} -- (end1.west);
+  \draw[arrow] (step2.east) -- ++(5mm,0) node[midway, above] {Yes} -- (end2.west);
+  \draw[arrow] (step3.east) -- ++(5mm,0) node[midway, above] {Yes} -- (end3.west);
+  \draw[arrow] (step4.east) -- ++(5mm,0) node[midway, above] {Yes} -- (end4.west);
+
+  % step1（因数分解できる？）の上に補助ノード（途中合流ポイント）
+\path (start) -- (step1) coordinate[midway] (joinpoint); % 中間点にノードを置く
+
+% 処理終了→joinpoint（カクカク）
+\draw[arrow] (end1.north) |- (joinpoint);
+
+\end{tikzpicture}
+\end{center}
+
+
+\newpage
+
+%========== 第5章 ==========
+\chapter{演習}
+以下の問い(1)～(11)について関数\(F(s)\)を部分分数分解せよ\\
+
+  (1)\quad \( F(s) = \frac{2}{s(s+1)} \) \\
+
+  (2)\quad \( F(s) = \frac{s^2 + 3s + 4}{s(s+1)(s+2)} \)\\
+
+  (3)\quad \( F(s) = \frac{s+1}{s(s^2 + 4s + 8)} \) \\
+
+  (4)\quad \( F(s) = \frac{1}{(s+3)(s+4)^2} \) \\
+
+  (5)\quad \( F(s) = \frac{2}{(s+1)(s+3)} \) \\
+
+  (6)\quad \( F(s) = \frac{3}{s(s+2)^2} \) \\
+
+  (7)\quad \( F(s) = \frac{1}{s(s+2)(s+3)^2} \) \\
+
+  (8)\quad \( F(s) = \frac{s+2}{s^3(s-1)^2} \) \\
+
+  (9)\quad \( F(s) = \frac{1}{(s^2+1)(s^2+4)} \)\\
+  
+  (10)\quad \( F(s) = \frac{s^2 - s + 2}{s(s+3)(s-4)} \)
+
+
+  %========== 第6章 ==========
+\chapter{解答例}
+
+以下(1)～(10)の解答例\\
+
+  (1)\quad \( F(s) = \frac{2}{s(s+1)} \) 
+
+  \begin{align*}
+    F(s) &= \frac{2}{s(s+1)} \\
+          &= \frac{1}{s}\left.\Bigl[sF(s)\Bigr]\right|_{s=0} 
+          + \frac{1}{s+1}\left.\Bigl[(s+1)F(s)\Bigr]\right|_{s=-1} \\[1mm]
+          &= \frac{1}{s}\cdot 2 
+          + \frac{1}{s+1}\cdot (-2) \\[1mm]
+          &= \frac{2}{s} - \frac{2}{s+1}
+  \end{align*} 
+
+  (2)\quad \( F(s) = \frac{s^2 + 3s + 4}{s(s+1)(s+2)} \)
+  
+  \begin{align*}
+    F(s) &= \frac{s^2 + 3s + 4}{s(s+1)(s+2)} \\
+          &= \frac{1}{s}\left.\Bigl[sF(s)\Bigr]\right|_{s=0}
+          + \frac{1}{s+1}\left.\Bigl[(s+1)F(s)\Bigr]\right|_{s=-1}
+          + \frac{1}{s+2}\left.\Bigl[(s+2)F(s)\Bigr]\right|_{s=-2} \\[1mm]
+          &= \frac{1}{s}\cdot 2
+          + \frac{1}{s+1}\cdot (-2)
+          + \frac{1}{s+2}\cdot 1 \\[1mm]
+          &= \frac{2}{s} - \frac{2}{s+1} + \frac{1}{s+2}
+  \end{align*}
+
+  (3)\quad \( F(s) = \frac{s+1}{s(s^2 + 4s + 8)} \) 
+
+  \begin{align*}
+    F(s) &= \frac{s+1}{s(s^2 + 4s + 8)} \\
+         &= \frac{1}{s}\left.\Bigl[sF(s)\Bigr]\right|_{s=0}
+          + \frac{As + B}{s^2 + 4s + 8}  \\[1mm]
+         &= \frac{1}{s}\cdot \frac{1}{8}
+          + \frac{-s + 4}{8(s^2 + 4s + 8)}  \quad [\because \text{係数比較により}A=-1,B=4] \\[1mm]
+         &= \frac{1}{8s} - \frac{s - 4}{8(s^2 + 4s + 8)}
+  \end{align*}
+
+  \newpage
+
+  (4)\quad \( F(s) = \frac{1}{(s+3)(s+4)^2} \) 
+
+  \begin{align*}
+    F(s) &= \frac{1}{(s+3)(s+4)^2} \\
+         &= \frac{1}{s+3} \left.\Bigl[(s+3)F(s)\Bigr]\right|_{s=-3}
+          + \frac{1}{s+4} \left.\Bigl[(s+4)F(s)\Bigr]\right|_{s=-4} \\
+          &\qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad 
+          + \frac{1}{(s+4)^2} \left.\Bigl[\frac{d}{ds}\Bigl[(s+4)^2F(s)\Bigr]\Bigr]\right|_{s=-4} \\[1mm]
+         &= \frac{1}{s+3}\cdot 1
+          + \frac{1}{s+4}\cdot (-1)
+          + \frac{1}{(s+4)^2}\cdot (-1) \\[1mm]
+         &= \frac{1}{s+3} - \frac{1}{s+4} - \frac{1}{(s+4)^2}
+  \end{align*}\\
+
+
+  (5)\quad \( F(s) = \frac{2}{(s+1)(s+3)} \) 
+
+  \begin{align*}
+    F(s) &= \frac{2}{(s+1)(s+3)} \\
+         &= \frac{1}{s+1} \left.\Bigl[(s+1)F(s)\Bigr]\right|_{s=-1}
+          + \frac{1}{s+3} \left.\Bigl[(s+3)F(s)\Bigr]\right|_{s=-3} \\[1mm]
+         &= \frac{1}{s+1}\cdot 1
+          + \frac{1}{s+3}\cdot (-1) \\[1mm]
+         &= \frac{1}{s+1} - \frac{1}{s+3}
+  \end{align*}\\
+
+  (6)\quad \( F(s) = \frac{3}{s(s+2)^2} \) 
+
+  \begin{align*}
+    F(s) &= \frac{3}{s(s+2)^2} \\
+         &= \frac{1}{s} \left.\Bigl[sF(s)\Bigr]\right|_{s=0}
+          + \frac{1}{s+2} \left.\Bigl[(s+2)F(s)\Bigr]\right|_{s=-2} \\
+          &\qquad \qquad \qquad \qquad \qquad 
+          + \frac{1}{(s+2)^2} \left.\Bigl[\frac{d}{ds}\Bigl[(s+2)^2F(s)\Bigr]\Bigr]\right|_{s=-2} \\[1mm]
+         &= \frac{1}{s} \cdot \frac{3}{4}
+          + \frac{1}{s+2} \cdot \left(-\frac{3}{4}\right)
+          + \frac{1}{(s+2)^2} \cdot \left(-\frac{3}{2}\right) \\[1mm]
+         &= \frac{3}{4s} - \frac{3}{4(s+2)} - \frac{3}{2(s+2)^2}
+  \end{align*}
+
+  \newpage
+
+  (7)\quad \( F(s) = \frac{1}{s(s+2)(s+3)^2} \) 
+
+  \begin{align*}
+    F(s) &= \frac{1}{s(s+2)(s+3)^2} \\
+         &= \frac{1}{s} \left.\Bigl[sF(s)\Bigr]\right|_{s=0}
+          + \frac{1}{s+2} \left.\Bigl[(s+2)F(s)\Bigr]\right|_{s=-2}
+          + \frac{1}{s+3} \left.\Bigl[(s+3)F(s)\Bigr]\right|_{s=-3}\\
+          &\qquad \qquad \qquad \qquad 
+          + \frac{1}{s+3} \left.\Bigl[(s+3)F(s)\Bigr]\right|_{s=-3}
+          + \frac{1}{(s+3)^2} \left.\Bigl[\frac{d}{ds}\Bigl[(s+3)^2F(s)\Bigr]\Bigr]\right|_{s=-3} \\[1mm]
+         &= \frac{1}{s} \cdot \frac{1}{18}
+          + \frac{1}{s+2} \cdot \left(-\frac{1}{2}\right)
+          + \frac{1}{s+3} \cdot \frac{4}{9}
+          + \frac{1}{(s+3)^2} \cdot \frac{1}{3} \\[1mm]
+         &= \frac{1}{18s} - \frac{1}{2(s+2)} + \frac{4}{9(s+3)} + \frac{1}{3(s+3)^2}
+  \end{align*}
+
+  (8)\quad \( F(s) = \frac{s+2}{s^3(s-1)^2} \) 
+
+  \begin{align*}
+    F(s) &= \frac{s+2}{s^3(s-1)^2} \\
+         &= \frac{1}{s} \cdot \left.\Bigl[sF(s)\Bigr]\right|_{s=0}
+          + \frac{1}{s^2} \cdot \left.\Bigl[\frac{d}{ds}(s^2F(s))\Bigr]\right|_{s=0}
+          + \frac{1}{s^3} \cdot \left.\Bigl[\frac{1}{2} \cdot \frac{d^2}{ds^2}(s^3F(s))\Bigr]\right|_{s=0} \\[1mm]
+         &\quad \quad \quad \quad \quad + \frac{1}{s-1} \cdot \left.\Bigl[(s-1)F(s)\Bigr]\right|_{s=1}
+          + \frac{1}{(s-1)^2} \cdot \left.\Bigl[\frac{d}{ds}((s-1)^2F(s))\Bigr]\right|_{s=1} \\[1mm]
+         &= \frac{1}{s^3}\cdot 2 + \frac{1}{s^2}\cdot 5 + \frac{1}{s}\cdot 8 
+          + \frac{1}{(s-1)}\cdot (-8) + \frac{1}{(s-1)^2}\cdot 3 \\[1mm]
+         &= \frac{2}{s^3} + \frac{5}{s^2} + \frac{8}{s} + \frac{3}{(s-1)^2} - \frac{8}{s-1}
+  \end{align*}
+
+  (9)\quad \( F(s) = \frac{1}{(s^2+1)(s^2+4)} \)
+  
+  \begin{align*}
+    F(s) &= \frac{1}{(s^2+1)(s^2+4)} \\
+         &= \frac{(\frac{1}{3})}{s^2 + 1} + \frac{(-\frac{1}{3})}{s^2 + 4}
+         \quad [\because \text{ \(s^2=u\)としてヘヴィサイドを用いた }] \\[1mm]
+         &= \frac{1}{3(s^2 + 1)} - \frac{1}{3(s^2 + 4)}
+  \end{align*}
+
+  (10)\quad \( F(s) = \frac{s^2 - s + 2}{s(s+3)(s-4)} \)
+
+  \begin{align*}
+    F(s) &= \frac{s^2 - s + 2}{s(s+3)(s-4)} \\
+         &= \frac{1}{s} \left.\Bigl[sF(s)\Bigr]\right|_{s=0}
+          + \frac{1}{s+3} \left.\Bigl[(s+3)F(s)\Bigr]\right|_{s=-3}
+          + \frac{1}{s-4} \left.\Bigl[(s-4)F(s)\Bigr]\right|_{s=4} \\[1mm]
+         &= \frac{1}{s} \cdot \left(-\frac{1}{6}\right)
+          + \frac{1}{s+3} \cdot \left(\frac{2}{3}\right)
+          + \frac{1}{s-4} \cdot \left(\frac{1}{2}\right) \\[1mm]
+         &= -\frac{1}{6s} + \frac{2}{3(s+3)} + \frac{1}{2(s-4)}
+  \end{align*}
+
+
+\end{document}

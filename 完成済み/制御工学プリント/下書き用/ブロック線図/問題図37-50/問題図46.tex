@@ -1,0 +1,59 @@
+% --------------- [46] ---------------
+\begin{tikzpicture}[auto, node distance=0.8cm and 1.0cm, >=Latex]
+
+    % --- 主系列ノード（横並び） ---
+    \coordinate (input);
+    \node[circle, draw, inner sep=1.5pt, right=of input] (sum1) {};        % 合流1
+    \node[block, right=of sum1] (G1) {$G_1$};                               % G1
+    \node[circle, draw, inner sep=1.5pt, right=of G1] (sum2) {};           % 合流2
+    \node[block, right=of sum2] (G2) {$G_2$};                               % G2
+    \node[circle, draw, inner sep=1.5pt, right=of G2] (sum3) {};           % 合流3
+    \node[block, right=of sum3] (G3) {$G_3$};                               % G3
+    \node[circle, fill=black, inner sep=1.5pt, right=of G3] (branch1) {};  % 分岐1
+    \node[block, right=of branch1] (G4) {$G_4$};                            % G4
+    \node[circle, fill=black, inner sep=1.5pt, right=of G4] (branch2) {};  % 分岐2
+    \coordinate[right=of branch2] (output);
+  
+    % --- 上下ノード配置 ---
+    \node[block, above=1.2cm of branch1] (H2) {$H_2$};                      % H2（分岐1の上）
+    \node[block, below=of sum3] (H1) {$H_1$};                         % H1（合流3の下）
+    \node[circle, fill=black, inner sep=1.5pt] at ($(branch1)+(0,-1.3)$) (branch3) {};% 分岐3（分岐1の下）
+  
+    % --- 経路①: input → ... → output ---
+    \draw[->] (input) -- (sum1);
+    \draw[->] (sum1) -- (G1);
+    \draw[->] (G1) -- (sum2);
+    \draw[->] (sum2) -- (G2);
+    \draw[->] (G2) -- (sum3);
+    \draw[->] (sum3) -- (G3);
+    \draw[->] (G3) -- (branch1);
+    \draw[->] (branch1) -- (G4);
+    \draw[->] (G4) -- (branch2);
+    \draw[->] (branch2) -- (output);
+  
+    % --- 経路②: 分岐2 → H2 → 合流3 ---
+    \draw[->] (branch2) |- (H2);
+    \draw[->] (H2) -| (sum3);
+  
+    % --- 経路③: 分岐1 → 分岐3 → H1 → 合流2 ---
+    \draw[->] (branch1) -- (branch3);
+    \draw[->] (branch3) -- (H1);
+    \draw[->] (H1) -| (sum2);
+  
+    % --- 経路④: 分岐3 → ↓←↑ → 合流1 ---
+    \coordinate (pivot) at ($(sum1)+(0,-2.4)$); % 合流点1の下
+    \draw[->] (branch3) |-(pivot) -- (sum1);
+  
+    % --- 加算記号配置 ---
+    \node at ($(sum1)+(-0.3,0.3)$) {\small $+$};
+    \node at ($(sum1)+(-0.3,-0.3)$) {\small $-$};
+    \node at ($(sum2)+(-0.3,0.3)$) {\small $+$};
+    \node at ($(sum2)+(-0.3,-0.3)$) {\small $+$};
+    \node at ($(sum3)+(-0.3,0.3)$) {\small $+$};
+    \node at ($(sum3)+(-0.3,-0.3)$) {\small $+$};
+
+    % --- その他記号配置 ---
+    \node at ($(sum1)+(-1.0,0.3)$) {\small $a(s)$};
+    \node at ($(branch2)+(1.0,0.3)$) {\small $b(s)$};
+  
+\end{tikzpicture}
