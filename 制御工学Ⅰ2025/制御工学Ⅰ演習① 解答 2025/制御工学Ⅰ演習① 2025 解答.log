@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2025.2.15)  23 MAY 2025 15:59
+This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2025.2.15)  24 MAY 2025 12:11
  restricted system commands enabled.
 **"c:/Users/81807/Desktop/TeX/制御工学/制御工学Ⅰ2025/制御工学Ⅰ演習① 解答 2025/制御工学Ⅰ演習① 2025 解答"
 ("c:/Users/81807/Desktop/TeX/制御工学/制御工学Ⅰ2025/制御工学Ⅰ演習① 解答 2025/制御工学Ⅰ演習① 2025 解答.tex"
@@ -1053,14 +1053,14 @@ L3 programming layer <2025-01-18>
 Here is how much of LuaTeX's memory you used:
  31848 strings out of 475512
  156557,1648299 words of node,token memory allocated
- 1267 words of node memory still in use:
-   11 hlist, 2 vlist, 5 rule, 2 glue, 4 kern, 1 glyph, 301 attribute, 52 glue_spec, 39 attribute_list, 2 write, 13 user_defined nodes
-   avail lists: 1:38,2:43105,3:2380,4:863,5:377,6:46,7:4504,8:77,9:2040,10:8,11:2
+ 1219 words of node memory still in use:
+   11 hlist, 2 vlist, 5 rule, 2 glue, 4 kern, 1 glyph, 279 attribute, 52 glue_spec, 37 attribute_list, 2 write, 13 user_defined nodes
+   avail lists: 1:38,2:43129,3:2380,4:863,5:377,6:46,7:4504,8:77,9:2040,10:8,11:2
  54023 multiletter control sequences out of 65536+600000
  73 fonts using 39202855 bytes
  116i,19n,115p,2008b,2345s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2024/texmf-dist/fonts/opentype/public/lm/lmroman12-regular.otf><c:/texlive/2024/texmf-dist/fonts/truetype/public/ipaex/ipaexm.ttf><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on 制御工学Ⅰ演習① 2025 解答.pdf (15 pages, 350324 bytes).
+Output written on 制御工学Ⅰ演習① 2025 解答.pdf (15 pages, 349971 bytes).
 
 PDF statistics: 102 PDF objects out of 1000 (max. 8388607)
  69 compressed objects within 1 object stream

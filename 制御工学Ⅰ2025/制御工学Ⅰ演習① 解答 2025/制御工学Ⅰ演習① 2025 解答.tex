@@ -80,22 +80,22 @@
 \begin{tcolorbox}[title={1. (2) \(G_2(s) = \dfrac{6}{s^3+6s^2+11s+6}\) }]
   \vspace{-3mm}
 \begin{align*}
-    &\qquad X(s) =\frac{ 1 }{ s^3 +6 s^2+ 11s + 6 }  \\
-    &\Leftrightarrow X(s) =\frac{ 1 }{ (s+1)(s+2)(s+3) }  \\
+    &\qquad X(s) =\frac{ 6 }{ s^3 +6 s^2+ 11s + 6 }  \\
+    &\Leftrightarrow X(s) =\frac{ 6 }{ (s+1)(s+2)(s+3) }  \\
     &\Leftrightarrow X(s) 
-    = \frac{(\frac{1}{2})}{s+1}
-    + \frac{-1}{s + 2}
-    + \frac{(\frac{1}{2})}{s + 3}
+    = \frac{3}{s+1}
+    + \frac{-6}{s + 2}
+    + \frac{3}{s + 3}
 \end{align*}
 
 \quad 両辺にラプラス逆変換を施すと，
 \vspace{-3mm}
 \begin{align*}
     &\qquad \mathcal{L}^{-1} \left[ X(s) \right] 
-    =\mathcal{L}^{-1} \left[ \frac{(\frac{1}{2})}{s+1} \right]
-    +\mathcal{L}^{-1} \left[ \frac{-1}{s + 2} \right]
-    +\mathcal{L}^{-1} \left[ \frac{(\frac{1}{2})}{s + 3} \right] \\
-    &\Leftrightarrow x(t) = (\frac{1}{2})e^{-t} - e^{-2t} + (\frac{1}{2})e^{-3t}
+    =\mathcal{L}^{-1} \left[ \frac{3}{s+1} \right]
+    +\mathcal{L}^{-1} \left[ \frac{-6}{s + 2} \right]
+    +\mathcal{L}^{-1} \left[ \frac{3}{s + 3} \right] \\
+    &\Leftrightarrow x(t) = 3e^{-t} - 6e^{-2t} + 3e^{-3t}
 \end{align*}
 \end{tcolorbox}
 
@@ -299,11 +299,11 @@
         + \dfrac{\left(\dfrac{-2 \omega s - \omega^3 + \omega}{(1+\omega^2)^2}\right)}{s^2+\omega^2} \\
         &\therefore \quad \mathcal{L}^{-1} \left[ X(s)\right]\\ 
         & \quad = \frac{1}{(\omega^2 + 1)^2} \left\{ \mathcal{L}^{-1} \left[\frac{\omega(\omega^2 + 1)}{(s+1)^2}\right]
-        + \mathcal{L}^{-1} \left[\frac{2}{s+1}\right]
+        + \mathcal{L}^{-1} \left[\frac{2 \omega }{s+1}\right]
         + \mathcal{L}^{-1} \left[\frac{-2 \omega s-\omega ^3+\omega}{s^2+\omega^2}\right] 
         \right\}\\
         &\therefore \quad x(t) =\frac{1}{(\omega^2 + 1)^2}
-        \left\{\omega (\omega^2+1)  t e^{-t}+ 2 e^{-t}
+        \left\{\omega (\omega^2+1)  t e^{-t}+ 2 \omega e^{-t}
         - 2\omega \cos(\omega t) + (1 - \omega^2)  \sin(\omega t) 
         \right\}
     \end{align*}
@@ -1178,12 +1178,7 @@
     \end{center}}]
     運動方程式は
     \begin{align*}
-        \left\{
-            \begin{aligned}
-        M \ddot{x_1}(t) &= - d \left\{\dot{x_1}(t)-\dot{x_2}(t)\right\} \\
         m \ddot{x_2}(t) &= - k x_2(t) + d \left\{\dot{x_1}(t)-\dot{x_2}(t)\right\}
-            \end{aligned}
-        \right.
     \end{align*}
 \end{tcolorbox}
 
