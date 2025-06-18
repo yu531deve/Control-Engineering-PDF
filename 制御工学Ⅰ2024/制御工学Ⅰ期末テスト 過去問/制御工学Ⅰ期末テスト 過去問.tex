@@ -1,0 +1,418 @@
+\documentclass[a4paper,12pt]{article}
+%\documentclass[fleqn]{article}
+
+% ---パッケージ---
+\usepackage{amsmath,amssymb}    %数式用
+\usepackage{tcolorbox}   %囲み枠用（tcolorboxに変更）
+\usepackage{geometry}   %余白調節
+\usepackage{tikz}  % ← 図を描くためのTikZパッケージ
+\geometry{margin=25mm}  %余白を少し狭く
+\usetikzlibrary{decorations.pathmorphing,patterns,positioning,arrows.meta} % バネ・壁の模様
+\tikzset{
+  block/.style = {draw, rectangle, minimum height=2em, minimum width=3em},
+  sum/.style = {draw, circle, inner sep=0pt, minimum size=5mm},
+  input/.style = {coordinate},
+  output/.style = {coordinate}
+}
+\usetikzlibrary{calc}
+
+
+% --- 日本語用パッケージ ---
+\usepackage{luatexja}         % 日本語表示に必要
+\usepackage{luatexja-fontspec} % フォント指定用
+
+% --- フォント指定（Overleaf標準フォント）---
+\setmainjfont{IPAexMincho}  % 明朝体
+%\setmainjfont{IPAexGothic}  % ゴシック体にしたい場合
+
+% --- tcolorbox の設定 ---
+\tcbset{
+    colframe=black,
+    colback=white,         % 本文の背景（白）
+    boxrule=0.8pt,
+    arc=3pt,
+    outer arc=3pt,
+    boxsep=4pt,
+    coltitle=black,
+    colbacktitle=gray!20,  % タイトルの背景（グレー）
+    fonttitle=\normalsize
+}
+
+\begin{document}
+
+\noindent
+\text{制御工学Ⅰ 2024 期末テスト}
+
+\vspace{10mm}
+
+\noindent
+1. 下図に示すシステムにおいて、システム全体の伝達関数を求めよ。\\
+\begin{minipage}[t]{0.45\linewidth}
+    (1)\\
+    \begin{tikzpicture}[auto, node distance=0.3cm and 0.5cm, >=Latex]
+
+        % --- 横並びのノード配置 ---
+        \node at (0,0) (input) {};
+        \node[circle, draw, inner sep=1.5pt, right=of input] (sum1) {};         % 合流1
+        \node[block, right=of sum1] (G1) {$G_1(s)$};
+        \node[circle, draw, inner sep=1.5pt, right=of G1] (sum2) {};            % 合流2
+        \node[circle, fill=black, inner sep=1.5pt, right=of sum2] (branch1) {}; % 分岐1
+        \node[block, right=of branch1] (G3) {$G_3(s)$};
+        \node[circle, fill=black, inner sep=1.5pt, right=of G3] (branch2) {};   % 分岐2
+        \node[right=of branch2] (output) {};
+
+        % --- フィードバック座標ノード（図形なし） ---
+    \coordinate (fb1) at ($(branch1)+(0,-1.2)$);
+    \coordinate (fb2) at ($(branch2)+(0,1.2)$);
+
+        % === 主系列 ===
+        \draw[->] (input) -- (sum1);
+        \draw[->] (sum1) -- (G1);
+        \draw[->] (G1) -- (sum2);
+        \draw[->] (sum2) -- (branch1);
+        \draw[->] (branch1) -- (G3);
+        \draw[->] (G3) -- (branch2);
+        \draw[->] (branch2) -- (output);
+
+        % === フィードバック経路 ===
+        \draw[->] (branch1) |- (fb1.center) -| (sum1);
+        \draw[->] (branch2) |- (fb2.center) -| (sum2);
+
+        % --- 加算記号配置 ---
+        \node at ($(sum1)+(-0.3,0.3)$) {\small $+$};
+        \node at ($(sum1)+(-0.3,-0.3)$) {\small $-$};
+        \node at ($(sum2)+(-0.3,0.3)$) {\small $-$};
+        \node at ($(sum2)+(-0.3,-0.3)$) {\small $+$};
+
+
+    \end{tikzpicture}\\
+
+    (3)\\
+    \begin{tikzpicture}[auto, node distance=0.4cm and 0.6cm, >=Latex]
+
+            % --- 横並びノード ---
+            \node at (0,0) (input) {};
+            \node[circle, draw, inner sep=1.5pt, right=of input] (sum1) {};            % 合流1
+            \node[block, right=of sum1] (G1) {$G_1(s)$};
+            \node[circle, fill=black, inner sep=1.5pt, right=of G1] (branch1) {};      % 分岐1
+            \node[circle, fill=black, inner sep=1.5pt, right=of branch1] (branch2) {}; % 分岐2
+            \node[block, right=of branch2] (G4) {$G_4(s)$};
+            \node[circle, draw, inner sep=1.5pt, right=of G4] (sum2) {};               % 合流2
+            \node[right=of sum2] (output) {};
+            
+            % --- フィードバック座標 ---
+            \coordinate (fb_down) at ($(branch2)+(0,-1.0)$);
+            \coordinate (fb_up) at ($(branch1)+(0,1.0)$);
+            
+            % === 主系列 ===
+            \draw[->] (input) -- (sum1);
+            \draw[->] (sum1) -- (G1);
+            \draw[->] (G1) -- (branch1);
+            \draw[->] (branch1) -- (branch2);
+            \draw[->] (branch2) -- (G4);
+            \draw[->] (G4) -- (sum2);
+            \draw[->] (sum2) -- (output);
+            
+            % === フィードバック経路 ===
+            \draw[->] (branch2) |- (fb_down) -| (sum1);
+            \draw[->] (branch1) |- (fb_up) -| (sum2);
+            
+            % --- 加算記号配置 ---
+            \node at ($(sum1)+(-0.3,0.3)$) {\small $+$};
+            \node at ($(sum1)+(-0.3,-0.3)$) {\small $+$};
+            \node at ($(sum2)+(-0.3,0.3)$) {\small $-$};
+            \node at ($(sum2)+(-0.3,-0.3)$) {\small $+$};
+            
+    \end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\linewidth}
+    (2)\\
+    \begin{tikzpicture}[auto, node distance=0.4cm and 0.6cm, >=Latex]
+
+        % --- 横並びの主系列ノード ---
+        \node at (0,0) (input) {};
+        \node[circle, draw, inner sep=1.5pt, right=of input] (sum) {};
+        \node[block, right=of sum] (G3) {$G_3(s)$};
+        \node[circle, fill=black, inner sep=1.5pt, right=of G3] (branch) {};
+        \node[block, right=of branch] (s1) {$s$};
+        \node[right=of s1] (output) {};
+        
+        % --- 下の s ノード ---
+        \node[block, below=of G3] (s2) {$s$};
+        
+        % === 主系列 ===
+        \draw[->] (input) -- (sum);
+        \draw[->] (sum) -- (G3);
+        \draw[->] (G3) -- (branch);
+        \draw[->] (branch) -- (s1);
+        \draw[->] (s1) -- (output);
+        
+        % === フィードバック経路（下） ===
+        \draw[->] (branch) |- (s2) -| (sum);
+        
+        % --- 加算記号配置 ---
+        \node at ($(sum)+(-0.3,0.3)$) {\small $+$};
+        \node at ($(sum)+(0.3,-0.3)$) {\small $-$};
+        
+    \end{tikzpicture}\\
+
+    (4)\\
+    \begin{tikzpicture}[auto, node distance=0.4cm and 0.6cm, >=Latex]
+
+        % --- 横並びノード（sum1 と branch2 の位置を交換） ---
+        \node at (0,0) (input) {};
+        \node[circle, fill=black, inner sep=1.5pt, right=of input] (branch2) {};     % ← 分岐2
+        \node[block, right=of branch2] (G1) {$G_1(s)$};
+        \node[circle, fill=black, inner sep=1.5pt, right=of G1] (branch1) {};        % 分岐1
+        \node[circle, draw, inner sep=1.5pt, right=of branch1] (sum1) {};            % ← 合流1
+        \node[block, right=of sum1] (G4) {$G_4(s)$};
+        \node[circle, draw, inner sep=1.5pt, right=of G4] (sum2) {};                 % 合流2
+        \node[right=of sum2] (output) {};
+        
+        % --- フィードバック座標 ---
+        \coordinate (fb_down) at ($(branch2)+(0,-1.0)$);
+        \coordinate (fb_up) at ($(branch1)+(0,1.0)$);
+        
+        % === 主系列 ===
+        \draw[->] (input) -- (branch2);
+        \draw[->] (branch2) -- (G1);
+        \draw[->] (G1) -- (branch1);
+        \draw[->] (branch1) -- (sum1);
+        \draw[->] (sum1) -- (G4);
+        \draw[->] (G4) -- (sum2);
+        \draw[->] (sum2) -- (output);
+        
+        % === フィードバック経路 ===
+        \draw[->] (branch2) |- (fb_down) -| (sum1);
+        \draw[->] (branch1) |- (fb_up) -| (sum2);
+        
+        % --- 加算記号配置 ---
+        \node at ($(sum1)+(-0.3,0.3)$) {\small $+$};
+        \node at ($(sum1)+(-0.3,-0.3)$) {\small $+$};
+        \node at ($(sum2)+(-0.3,-0.3)$) {\small $+$};
+        \node at ($(sum2)+(0.3,0.3)$) {\small $-$};
+        
+    \end{tikzpicture}
+\end{minipage}\\
+
+\vspace{4mm}
+
+
+
+\noindent
+2.\quad \(\ddot{x}(t) - \sin(\omega t) = 0\) を解け。ただし、初期値はすべて０とする。\\
+
+\noindent
+3. 伝達関数\(\dfrac{s+1}{s^2+2s+4}\)のラプラス逆変換を行え。\\
+
+\noindent
+\begin{minipage}[t]{0.005\linewidth}
+    4.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.595\linewidth}
+右図に示す系について、入力を変位\(x_1(t)\)、出力を変位\(x_2(t)\)としたとき、
+次の問いに答えよ。なお、\(m\)は質量[kg]、\(d\)は粘性係数[Ns/m]、
+\(k_1\)、\(k_2\)はバネ[N/m] 
+とし、初期状態において系は静止しているとする。  
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.35\linewidth}
+    \vspace{-6mm}
+    \begin{center}
+        \begin{tikzpicture}[scale=1.0]
+          % 固定壁
+          \fill[pattern=north east lines] (-1,0,0) rectangle (-0.5,2);
+          \draw[thick] (-0.5,0) -- (-0.5,2);
+      
+          %接続部1
+          \draw[thick] (-0.5,1.1) -- (0,1.1);
+          \draw[thick] (0,0.8) -- (0,1.5);
+        
+          % バネ1
+          \draw[thick] (0,1.5) -- (0.25,1.5);
+          \draw[thick, decorate, decoration={zigzag, segment length=10, amplitude=4}] (0.25,1.5) -- (1.75,1.5);
+          \draw[thick] (1.75,1.5) -- (2.0,1.5);
+          \node at (1.0,2.0) {$k_1$};
+        
+          % ダンパー（シリンダー形式）
+          \draw[thick] (0,0.8) -- (0.5,0.8); % 棒
+          \draw[thick, fill=gray!20] (0.5,0.6) rectangle (1.25,1.0); % 筒の側面
+          \draw[thick] (1.25,1.0) -- (1.60,1.0); % 筒の上
+          \draw[thick] (1.25,0.6) -- (1.60,0.6); % 筒の下
+          \draw[thick, fill=white] (0.5,0.8) ellipse (0.1 and 0.2); % 左端面
+          \draw[thick, fill=white] (1.25,0.8) ellipse (0.1 and 0.2); % 右端面
+          \draw[thick] (1.25,0.8) -- (2.0,0.8); % ピストン棒
+          \node at (1.2,0.2) {$d$};
+      
+          %接続部2
+          \draw[thick] (2.0,0.8) -- (2.0,1.5);
+          \draw[thick] (2.0,1.1) -- (2.5,1.1);
+        
+          % 質量M
+          \draw[thick, fill=gray!10] (2.5,0.6) rectangle (3.0,1.7);
+          \node at (2.75,2.0) {$m$};
+      
+          % バネ2
+          \draw[thick] (3.0,1.1) -- (3.25,1.1);
+          \draw[thick, decorate, decoration={zigzag, segment length=10, amplitude=4}] (3.25,1.1) -- (4.75,1.1);
+          \draw[thick] (4.75,1.1) -- (5.0,1.1);
+          \node at (4.0,1.5) {$k_2$};
+      
+          % 丸
+          \draw[fill] (5,1.1) circle (0.05);
+      
+        
+          % 座標x1
+          \draw[->, thick] (5,0.2) -- (5.75,0.2);
+          \node at (5,-0.3) {$x_1(t)$};
+          \draw[dashed] (5,1.1) -- (5,0);
+      
+          % 座標x2
+          \draw[->, thick] (2.75,0.2) -- (3.5,0.2);
+          \node at (2.75,-0.3) {$x_2(t)$};
+          \draw[dashed] (2.75,0.6) -- (2.75,0);
+        
+        \end{tikzpicture}
+    \end{center}
+\end{minipage}\\
+
+\indent
+(1)この図によって示されるシステムの運動方程式と伝達関数を求めよ。\\
+
+\indent
+(2)\(m=1,d=4,k_1=1,k_2=2\)とし、インパルス応答、ステップ応答をそれぞれ求\\
+\indent \quad めよ。\\
+
+\indent
+(3)\(m=1,d=2,k_1=3,k_2=2\)とし、ステップ応答を求めよ。\\
+
+\indent
+(4)\(m=1,d=2,k_1=1,k_2=0\)とし、ステップ応答を求めよ。\\
+
+\indent
+(5)\(m=1,d=0,k_1=1,k_2=2\)とし、ステップ応答を求めよ。\\
+
+\indent
+(6)\(m=1,d=0,k_1=2,k_2=1\)とし、入力変位\(x_1(t)=\sin(t)\)を与えたときの応答を求
+\indent \quad めよ。\\
+
+\indent
+(7)\(m=1,d=2,k_1=1,k_2=1\)とし、入力変位\(x_1(t)=\sin(2t)\)を与えたときの応答を
+\indent \quad 求めよ。\\
+
+\newpage
+
+\noindent
+\begin{minipage}[t]{0.005\linewidth}
+    5.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.595\linewidth}
+右図に示す系について、入力を変位\(x_1(t)\)、出力を変位\(x_2(t)\)としたとき、
+次の問いに答えよ。なお、\(m\)は質量[kg]、\(d\)は粘性係数[Ns/m]、
+\(k_1\)、\(k_2\)はバネ[N/m] 
+とし、初期状態において系は静止しているとする。  
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.35\linewidth}
+    \vspace{-6mm}
+    \begin{center}
+        \begin{tikzpicture}[scale=1.0]
+          % 固定壁
+          \fill[pattern=north east lines] (-1,0,0) rectangle (-0.5,2);
+          \draw[thick] (-0.5,0) -- (-0.5,2);
+      
+          %接続部1
+          \draw[thick] (-0.5,1.1) -- (0,1.1);
+          \draw[thick] (0,0.8) -- (0,1.5);
+        
+          % バネ1
+          \draw[thick] (0,1.5) -- (0.25,1.5);
+          \draw[thick, decorate, decoration={zigzag, segment length=10, amplitude=4}] (0.25,1.5) -- (1.75,1.5);
+          \draw[thick] (1.75,1.5) -- (2.0,1.5);
+          \node at (1.0,2.0) {$k$};
+        
+          % ダンパー2（シリンダー形式）
+          \draw[thick] (0,0.8) -- (0.5,0.8); % 棒
+          \draw[thick, fill=gray!20] (0.5,0.6) rectangle (1.25,1.0); % 筒の側面
+          \draw[thick] (1.25,1.0) -- (1.60,1.0); % 筒の上
+          \draw[thick] (1.25,0.6) -- (1.60,0.6); % 筒の下
+          \draw[thick, fill=white] (0.5,0.8) ellipse (0.1 and 0.2); % 左端面
+          \draw[thick, fill=white] (1.25,0.8) ellipse (0.1 and 0.2); % 右端面
+          \draw[thick] (1.25,0.8) -- (2.0,0.8); % ピストン棒
+          \node at (1.0,0.2) {$d_2$};
+      
+          %接続部2
+          \draw[thick] (2.0,0.8) -- (2.0,1.5);
+          \draw[thick] (2.0,1.1) -- (2.5,1.1);
+        
+          % 質量M
+          \draw[thick, fill=gray!10] (2.5,0.6) rectangle (3.0,1.7);
+          \node at (2.75,2.0) {$m$};
+      
+          % ダンパー1（シリンダー形式）
+          \draw[thick] (3,1.1) -- (3.5,1.1); % 棒
+          \draw[thick, fill=gray!20] (3.5,0.9) rectangle (4.25,1.3); % 筒の側面
+          \draw[thick] (4.25,1.3) -- (4.60,1.3); % 筒の上
+          \draw[thick] (4.25,0.9) -- (4.60,0.9); % 筒の下
+          \draw[thick, fill=white] (3.5,1.1) ellipse (0.1 and 0.2); % 左端面
+          \draw[thick, fill=white] (4.25,1.1) ellipse (0.1 and 0.2); % 右端面
+          \draw[thick] (4.25,1.1) -- (5,1.1); % ピストン棒
+          \node at (4.0,1.7) {$d_1$};
+      
+          % 丸
+          \draw[fill] (5,1.1) circle (0.05);
+      
+        
+          % 座標x1
+          \draw[->, thick] (5,0.2) -- (5.75,0.2);
+          \node at (5,-0.3) {$x_1(t)$};
+          \draw[dashed] (5,1.1) -- (5,0);
+      
+          % 座標x2
+          \draw[->, thick] (2.75,0.2) -- (3.5,0.2);
+          \node at (2.75,-0.3) {$x_2(t)$};
+          \draw[dashed] (2.75,0.6) -- (2.75,0);
+        
+        \end{tikzpicture}
+    \end{center}
+\end{minipage}\\
+
+\indent
+(1)この図によって示されるシステムの運動方程式と伝達関数を求めよ。\\
+
+\indent
+(2)\(x_1(t)\)に単位ステップ入力を印加した際の応答について、\(x_2(t)\)の定常値を求めよ。\\
+
+\indent
+(3)\(m=1,d_1=1,d_2=1,k=1\)とし、インパルス応答、ステップ応答をそれぞれ求\\
+\indent \quad めよ。\\
+
+\indent
+(4)\(m=1,d_1=2,d_2=2,k=5\)とし、ステップ応答を求めよ。\\
+
+\indent
+(5)\(m=1,d_1=1,d_2=1,k=1\)とし、入力\(x_1(t)=\sin(t)\)を与えたときの応答を求\\
+\indent \quad めよ。\\
+
+\indent
+(6)\(m=1,d_1=2,d_2=2,k=5\)とし、入力\(x_1(t)=\sin(2t)\)を与えたときの応答を求\\
+\indent \quad めよ。\\
+
+\indent
+(7)\(m=1,d_1=2,d_2=0,k=2\)とし、ステップ応答を求めよ。\\
+
+\noindent
+6. 伝達関数\(G_1(s)=\frac{1}{s+0.1}\)について漸近線を用いてボード線図を描け。
+まず\(10 \times \frac{1}{10s+1}\)として一次遅れ系に変形した上で、
+ゲイン(dB)、位相(deg.)を求めよ。各軸には適宜数値を記入し、
+折れ点等の特徴点を明示すること。\\
+
+
+\noindent
+7.\(G(s)=\frac{10}{s(s+1)}\)について、周波数応答関数、ゲイン(dB)、位相(deg.)を求めよ。
+また、漸近線を用いてボード線図の概形を描け。各軸には適宜数値を記入し、折れ点等の特徴点を明示すること。
+
+\end{document}
