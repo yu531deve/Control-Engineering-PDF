@@ -40,61 +40,210 @@
 
 \begin{document}
 
-% ---------------[5(5)]--------------- 済
-\begin{tcolorbox}[title={5. (5)\(m=1,d_1=1,d_2=1,k=1\)とし、入力変位\(x_1(t)=\sin(t)\)を与えたときの応
-\indent \quad 答を求めよ。 }]
+\begin{minipage}{0.5\linewidth}
+\begin{center}
+\begin{tikzpicture}[scale=0.3,xscale=3.5, yscale=0.05]
 
-パラメータを代入し、\(x_1(t)=\sin(t)\)のラプラス変換は\(X_i(s)=\dfrac{1}{s^2+1}\)なので
-    \vspace{-4mm}
-    \begin{align*}
-        &\qquad G(s) = \frac{s}{s^2 + 2s + 1} \\
-        &\therefore \quad X(s) = G(s) F(s) = \frac{s}{(s+1)^2(s^2 +1)} \\
-        &\therefore \quad X(s) =  \frac{\left(-\frac{1}{2}\right)}{(s+1)^2}
-        + \frac{\left(\frac{1}{2}\right)}{s^2 +1}\\
-        &\therefore \quad \mathcal{L}^{-1} \left[ X(s)\right] 
-        = \mathcal{L}^{-1} \left[\frac{\left(-\frac{1}{2}\right)}{(s+1)^2}\right]
-        + \mathcal{L}^{-1} \left[\frac{\left(\frac{1}{2}\right)}{s^2 +1}\right] \\
-        &\therefore \quad x(t) = -\frac{1}{2} t e^{-t} + \frac{1}{2} \sin t
-    \end{align*}
+  % 軸
+  \draw[->] (-0.2, -80) -- (4.5, -80) node[right] {$\log_{10} \omega$};
+  \draw[->] (0, -85) -- (0, 70) node[above] {ゲイン [dB]};
 
-\end{tcolorbox}
+  % 縦軸目盛
+  \foreach \y in {-80, -60, -40, -20, 0, 20, 40, 60} {
+    \draw (-0.05, \y) -- (0.05, \y);
+    \node[left] at (-0.1, \y) {\y};
+  }
 
-% ---------------[5(6)]--------------- 済
-\begin{tcolorbox}[title={5. (6)\(m=1,d_1=1,d_2=2,k=2\)とし、入力変位\(x_1(t)=\sin(2t)\)を与えたときの応
-\indent \quad 答を求めよ。 }]
+% 横軸目盛（0.2だけ上に表示）
+\foreach \x/\label in {
+  0/0.01,
+  1/0.1,
+  1.3/0.2,
+  2/1,
+  2.7/5,
+  3/10,
+  4/100
+} {
+  \draw (\x, -82) -- (\x, -78);
 
-パラメータを代入し、\(x_1(t)=\sin(2t)\)のラプラス変換は\(X_i(s)=\dfrac{2}{s^2+2^2}\)なので
-    \vspace{-4mm}
-    \begin{align*}
-        &\qquad G(s) = \frac{s}{s^2 + 3s + 2} \\
-        &\therefore \quad X(s) = G(s) F(s) = \frac{s}{(s+1)(s+2)(s^2+2^2)} \\
-        &\therefore \quad X(s) =  \frac{\left(-\frac{1}{5}\right)}{s+1} 
-        + \frac{\left(\frac{1}{4}\right)}{s+2}
-        + \frac{\left(-\frac{1}{20}s+\frac{3}{10}\right)}{s^2+2^2}\\
-        &\therefore \quad \mathcal{L}^{-1} \left[ X(s)\right] 
-        = \mathcal{L}^{-1} \left[\frac{\left(-\frac{1}{5}\right)}{s+1}  \right]
-        + \mathcal{L}^{-1} \left[\frac{\left(\frac{1}{4}\right)}{s+2} \right]
-        + \mathcal{L}^{-1} \left[\frac{\left(-\frac{1}{20}s+\frac{3}{10}\right)}{s^2+2^2}\right]  \\
-        &\therefore \quad x(t) = -\frac{1}{5} e^{-t} + \frac{1}{4} e^{-2t} - \frac{1}{20} \left\{ \cos (2t) - 3\sin (2t)\right\}
-    \end{align*}
+  % 0.2 (x = 1.3) だけ上に表示
+  \ifdim\x pt=1.3pt
+    \node[above] at (\x, -82) {\scriptsize \label};
+  \else
+    \node[below] at (\x, -82) {\scriptsize \label};
+  \fi
+}
 
-\end{tcolorbox}
 
-% ---------------[5(7)]--------------- 済
-\begin{tcolorbox}[title={5. (7)\(m=1,d_1=2,d_2=0,k=2\)とし、ステップ応答を求めよ。 }]
+  % 折れ点（log10 ω = 0 ⇒ x = 2）
+  \draw[dashed] (2, -80) -- (2, 60);
+  \node[below] at (2, -82) {\scriptsize 1};
 
-    パラメータを代入し、ステップ入力のラプラス変換は\(F(s)=\dfrac{1}{s}\)なので
-    \vspace{-4mm}
-    \begin{align*}
-        &\qquad G(s) = \frac{2s}{s^2 + 2s + 2} \\
-        &\therefore \quad X(s) = G(s) F(s) 
-        = \frac{2}{s^2 + 2s + 2} \\
-        &\therefore \quad \mathcal{L}^{-1} \left[ X(s)\right] 
-        = \mathcal{L}^{-1} \left[\frac{2}{(s+1)^2+1}\right] \\
-        &\therefore \quad x(t) = 2 e^{-t} \sin t
-    \end{align*}
+  % --- ゲイン漸近線（正確） ---
+  \draw[thick] (0, 60) -- (2, 20);    % ω = 0.01 ～ 1（−20 dB/dec）
+  \draw[thick] (2, 20) -- (4, -60);   % ω = 1 ～ 100（−40 dB/dec）
 
-\end{tcolorbox}
+  \draw[thick, red]
+  plot coordinates {
+    (0.000, 60.0)
+    (0.082, 58.4)
+    (0.163, 56.7)
+    (0.245, 55.1)
+    (0.327, 53.5)
+    (0.408, 51.8)
+    (0.490, 50.2)
+    (0.571, 48.6)
+    (0.653, 46.9)
+    (0.735, 45.3)
+    (0.816, 43.7)
+    (0.898, 42.0)
+    (0.980, 40.4)
+    (1.061, 38.7)
+    (1.143, 37.1)
+    (1.224, 35.4)
+    (1.306, 33.7)
+    (1.388, 32.0)
+    (1.469, 30.3)
+    (1.551, 28.5)
+    (1.633, 26.6)
+    (1.714, 24.7)
+    (1.796, 22.6)
+    (1.878, 20.5)
+    (1.959, 18.2)
+    (2.041, 15.7)
+    (2.122, 13.1)
+    (2.204, 10.4)
+    (2.286, 7.5)
+    (2.367, 4.6)
+    (2.449, 1.5)
+    (2.531, -1.6)
+    (2.612, -4.7)
+    (2.694, -7.9)
+    (2.776, -11.1)
+    (2.857, -14.4)
+    (2.939, -17.6)
+    (3.020, -20.9)
+    (3.102, -24.1)
+    (3.184, -27.4)
+    (3.265, -30.6)
+    (3.347, -33.9)
+    (3.429, -37.1)
+    (3.510, -40.4)
+    (3.592, -43.7)
+    (3.673, -46.9)
+    (3.755, -50.2)
+    (3.837, -53.5)
+    (3.918, -56.7)
+    (4.000, -60.0)
+  };
+
+
+\end{tikzpicture}
+
+\end{center}
+
+
+
+\begin{center}
+\begin{tikzpicture}[scale=0.3,xscale=3.5, yscale=0.025]
+
+  % 軸
+  \draw[->] (-0.2, -210) -- (4.5, -210) node[right] {$\log_{10} \omega$};
+  \draw[->] (0, -215) -- (0, 65) node[above] {位相 [deg]};
+
+  % 縦軸目盛（60 → -210）
+  \foreach \y in {-180, -90, 0, 60} {
+    \draw (-0.05, \y) -- (0.05, \y);
+    \node[left] at (-0.1, \y) {\y};
+  }
+
+  % 横軸目盛（0.2だけ上）
+  \foreach \x/\label in {
+    0/0.01,
+    1/0.1,
+    1.3/0.2,
+    2/1,
+    2.7/5,
+    3/10,
+    4/100
+  } {
+    \draw (\x, -212) -- (\x, -208);
+    \ifdim\x pt=1.3pt
+      \node[above] at (\x, -212) {\scriptsize \label};
+    \else
+      \node[below] at (\x, -212) {\scriptsize \label};
+    \fi
+  }
+
+  % 折れ点（ω = 1 ⇒ x = 2）
+  \draw[dashed] (2, -210) -- (2, 60);
+  \node[below] at (2, -212) {\scriptsize 1};
+
+  % --- 正しい位相漸近線 ---
+  \draw[thick] (0, -90) -- (1.3, -90);         % ω = 0.01 ～ 0.2：位相 0°
+  \draw[thick] (1.3, -90) -- (2.7, -180);    % ω = 0.2 ～ 5：下降（-180°へ）
+  \draw[thick] (2.7, -180) -- (4, -180);   % ω = 5 ～ 100：定常 −180°
+
+
+  \draw[thick, red]
+  plot coordinates {
+    (0.000, -90.6)
+    (0.082, -90.7)
+    (0.163, -90.8)
+    (0.245, -91.0)
+    (0.327, -91.2)
+    (0.408, -91.5)
+    (0.490, -91.8)
+    (0.571, -92.1)
+    (0.653, -92.6)
+    (0.735, -93.1)
+    (0.816, -93.7)
+    (0.898, -94.5)
+    (0.980, -95.5)
+    (1.061, -96.6)
+    (1.143, -97.9)
+    (1.224, -99.5)
+    (1.306, -101.4)
+    (1.388, -103.7)
+    (1.469, -106.4)
+    (1.551, -109.6)
+    (1.633, -113.2)
+    (1.714, -117.4)
+    (1.796, -122.0)
+    (1.878, -127.0)
+    (1.959, -132.3)
+    (2.041, -137.7)
+    (2.122, -143.0)
+    (2.204, -148.0)
+    (2.286, -152.6)
+    (2.367, -156.8)
+    (2.449, -160.4)
+    (2.531, -163.6)
+    (2.612, -166.3)
+    (2.694, -168.6)
+    (2.776, -170.5)
+    (2.857, -172.1)
+    (2.939, -173.4)
+    (3.020, -174.5)
+    (3.102, -175.5)
+    (3.184, -176.3)
+    (3.265, -176.9)
+    (3.347, -177.4)
+    (3.429, -177.9)
+    (3.510, -178.2)
+    (3.592, -178.5)
+    (3.673, -178.8)
+    (3.755, -179.0)
+    (3.837, -179.2)
+    (3.918, -179.3)
+    (4.000, -179.4)
+  };
+
+
+\end{tikzpicture}
+
+\end{center}
+\end{minipage}
 
 
 
