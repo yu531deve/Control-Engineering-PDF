@@ -606,42 +606,48 @@ G_{All}(s) = \dfrac{G_1(s)\,\left\{G_4(s) - 1\right\}}{1 - G_1(s)}
     \end{center}  }]
 
     \begin{center}
-    \begin{tikzpicture}[auto, node distance=0.4cm and 0.6cm, >=Latex]
+\begin{tikzpicture}[auto, node distance=0.4cm and 0.6cm, >=Latex]
 
-    % --- 横並びノード（sum1 を sum2 の右へ移動） ---
-    \node at (0,0) (input) {};
-    \node[circle, fill=black, inner sep=1.5pt, right=of input] (branch2) {};           % 分岐2
-    \node[block, right=of branch2] (G1) {$G_1(s)$};
-    \node[circle, fill=black, inner sep=1.5pt, right=of G1] (branch1) {};              % 分岐1
-    \node[block, right=of branch1] (G4) {$G_4(s)$};
-    \node[circle, draw, inner sep=1.5pt, right=of G4] (sum2) {};                       % 合流2（そのまま）
-    \node[circle, draw, inner sep=1.5pt, right=0.8cm of sum2] (sum1) {};                     % 合流1（移動後）
-    \node[right=of sum1] (output) {};
+% --- 横並びノード（分岐点を G1 の左に統一） ---
+\node at (0,0) (input) {};
+\node[circle, fill=black, inner sep=1.5pt, right=of input] (branch) {};           % 分岐点（統一）
+\node[block, right=of branch] (G1) {$G_1(s)$};
+\node[circle, draw, inner sep=1.5pt, right=of G1] (sum1) {};                      % 合流1
+\node[block, right=of sum1] (G4) {$G_4(s)$};
+\node[circle, draw, inner sep=1.5pt, right=of G4] (sum2) {};                      % 合流2
+\node[right=of sum2] (output) {};
 
-    % --- フィードバック座標 ---
-    \coordinate (fb_down) at ($(branch2)+(0,-0.8)$);
-    \coordinate (fb_up) at ($(branch1)+(0,0.8)$);
+% --- 上ルートの追加ノード G₁(s) ---
+\node[block, above=0.5cm of G1] (G1top) {$G_1(s)$};
 
-    % === 主系列 ===
-    \draw[->] (input) -- (branch2);
-    \draw[->] (branch2) -- (G1);
-    \draw[->] (G1) -- (branch1);
-    \draw[->] (branch1) -- (G4);
-    \draw[->] (G4) -- (sum2);
-    \draw[->] (sum2) -- (sum1);
-    \draw[->] (sum1) -- (output);
+% --- フィードバック座標（両方 branch 起点） ---
+\coordinate (fb_down) at ($(branch)+(0,-1.0)$);
+\coordinate (fb_up) at ($(branch)+(0,1.0)$);
 
-    % === フィードバック経路（branch2 → sum1）、位置変更に対応 ===
-    \draw[->] (branch2) |- (fb_down) -| (sum1);
-    \draw[->] (branch1) |- (fb_up) -| (sum2);
+% === 主系列 ===
+\draw[->] (input) -- (branch);
+\draw[->] (branch) -- (G1);
+\draw[->] (G1) -- (sum1);
+\draw[->] (sum1) -- (G4);
+\draw[->] (G4) -- (sum2);
+\draw[->] (sum2) -- (output);
 
-    % --- 加算記号配置 ---
-    \node at ($(sum1)+(0.3,-0.3)$) {\small $+$};
-    \node at ($(sum1)+(-0.3,-0.3)$) {\small $+$};
-    \node at ($(sum2)+(0.3,0.3)$) {\small $-$};
-    \node at ($(sum2)+(-0.3,-0.3)$) {\small $+$};
+% === 上ルート（branch → G1top → sum2）===
+\draw[->] (branch) |- (G1top.west);
+\draw[->] (G1top.east) -| (sum2.north);
 
-    \end{tikzpicture}
+% === フィードバック経路（そのまま） ===
+\draw[->] (branch) |- (fb_down) -| (sum1);
+
+% --- 加算記号配置 ---
+\node at ($(sum1)+(-0.3,0.3)$) {\small $+$};
+\node at ($(sum1)+(-0.3,-0.3)$) {\small $+$};
+\node at ($(sum2)+(-0.3,-0.3)$) {\small $+$};
+\node at ($(sum2)+(0.3,0.3)$) {\small $-$};
+
+\end{tikzpicture}
+
+
 
     \vspace{2mm}
         \begin{tikzpicture}
@@ -654,7 +660,7 @@ G_{All}(s) = \dfrac{G_1(s)\,\left\{G_4(s) - 1\right\}}{1 - G_1(s)}
     % --- 合成済みノード構成（完全伝達関数） ---
     \node[input] (input) {};
     \node[block, right=of input] (Gfinal) 
-        {$\displaystyle G_1(s)\,\left\{G_4(s) - 1\right\} + 1$};
+        {$ G_1(s) + G_4(s) + G_1(s)G_4(s)$};
     \node[output, right=of Gfinal] (output) {};
 
     % --- 線描画 ---
@@ -668,7 +674,7 @@ G_{All}(s) = \dfrac{G_1(s)\,\left\{G_4(s) - 1\right\}}{1 - G_1(s)}
 よって、システム全体の伝達関数\(G_{All}(s)\)は
 \vspace{-2mm}
 \[
-G_{All}(s) = G_1(s)\,\left\{G_4(s) - 1\right\} + 1
+G_{All}(s) = G_1(s) + G_4(s) + G_1(s)G_4(s)
 \]
 \end{tcolorbox}
 
