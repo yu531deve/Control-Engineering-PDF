@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2025.2.15)  26 JUN 2025 00:21
+This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2025.2.15)  26 JUN 2025 10:15
  restricted system commands enabled.
 **"c:/Users/81807/Desktop/TeX/制御工学/制御工学Ⅰ/制御工学Ⅰ2024/制御工学Ⅰ演習③ 解答/制御工学Ⅰ演習③ 解答"
 ("c:/Users/81807/Desktop/TeX/制御工学/制御工学Ⅰ/制御工学Ⅰ2024/制御工学Ⅰ演習③ 解答/制御工学Ⅰ演習③ 解答.tex"
@@ -1055,14 +1055,14 @@ Overfull \hbox (33.1178pt too wide) in paragraph at lines 1048--1049
 
 [9]
 LaTeX Font Info:    Font shape `JT3/IPAexMincho(0)/m/n' will be
-(Font)              scaled to size 7.69775pt on input line 1326.
+(Font)              scaled to size 7.69775pt on input line 1287.
 
-Overfull \hbox (15.0639pt too wide) in paragraph at lines 1390--1391
+Overfull \hbox (15.0639pt too wide) in paragraph at lines 1351--1352
  [] 
  []
 
 
-Overfull \hbox (13.72163pt too wide) in paragraph at lines 1494--1495
+Overfull \hbox (13.72163pt too wide) in paragraph at lines 1455--1456
  [] 
  []
 
@@ -1080,16 +1080,16 @@ L3 programming layer <2025-01-18>
 )
 
 Here is how much of LuaTeX's memory you used:
- 31860 strings out of 475512
- 244629,1648299 words of node,token memory allocated
- 1219 words of node memory still in use:
-   11 hlist, 2 vlist, 5 rule, 2 glue, 4 kern, 1 glyph, 279 attribute, 52 glue_spec, 37 attribute_list, 2 write, 13 user_defined nodes
-   avail lists: 1:39,2:60965,3:3725,4:1560,5:361,6:42,7:4572,8:83,9:2290,10:7,11:18
- 54035 multiletter control sequences out of 65536+600000
+ 31797 strings out of 475512
+ 195698,1648299 words of node,token memory allocated
+ 1195 words of node memory still in use:
+   11 hlist, 2 vlist, 5 rule, 2 glue, 4 kern, 1 glyph, 268 attribute, 52 glue_spec, 36 attribute_list, 2 write, 13 user_defined nodes
+   avail lists: 1:39,2:60977,3:3725,4:1560,5:332,6:42,7:4415,8:83,9:2144,10:7,11:18
+ 53972 multiletter control sequences out of 65536+600000
  82 fonts using 41844663 bytes
  116i,15n,115p,2014b,996s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2024/texmf-dist/fonts/opentype/public/lm/lmroman8-regular.otf><c:/texlive/2024/texmf-dist/fonts/opentype/public/lm/lmroman12-regular.otf><c:/texlive/2024/texmf-dist/fonts/truetype/public/ipaex/ipaexm.ttf><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on 制御工学Ⅰ演習③ 解答.pdf (12 pages, 356169 bytes).
+Output written on 制御工学Ⅰ演習③ 解答.pdf (12 pages, 349170 bytes).
 
 PDF statistics: 108 PDF objects out of 1000 (max. 8388607)
  73 compressed objects within 1 object stream

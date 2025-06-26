@@ -1234,50 +1234,11 @@ dB &= 20 \log_{10} \left( \frac{10}{\sqrt{(10\omega)^2 + 1}} \right) = 20 - 20 \
 \end{align*}
 
 位相は\angle G(j\omega)で与えられるので、
-
-\[
-G(j\omega) = 10 \times \frac{10 j \omega - 1}{(10\omega)^2 + 1} \\
-\]
-
-であることに注意して分子に着目すると、実部が\(-1\)、虚部が\(10 \omega \)なので下図より\\
-
-\begin{minipage}{0.45\linewidth}
-\vspace{-9mm}
 \begin{align*}
-    \angle G(j\omega) &= \pi - \tan^{-1}(10\omega) 
+\angle G(j\omega) &= \angle (10) -  \angle (10j\omega + 1)\\
+                &= 0^\circ - tan^{-1}(10\omega)
 \end{align*}
-    定義域  \( -\dfrac{\pi}{2} < \angle G(j\omega) < \dfrac{\pi}{2} \) より
-\begin{align*}
-    \angle G(j\omega) &= -\tan^{-1}(10\omega)
-\end{align*}
-\end{minipage}
-\hfill
-\begin{minipage}{0.5\linewidth}
-\begin{tikzpicture}[>=Stealth, scale=0.5]
 
-  % 軸
-  \draw[->] (-2.5, 0) -- (2, 0) node[right] {$Re$};
-  \draw[->] (0, -0.5) -- (0, 4) node[above] {$Im$};
-
-  % ベクトルの終点（実部 -1, 虚部 3）
-  \coordinate (P) at (-1, 3);
-
-  % ベクトル G(jω)
-  \draw[thick, blue, ->] (0, 0) -- (P) node[above left] {$G(j\omega)$};
-
-  % 補助線
-  \draw[dashed] (P) -- (-1, -0.2) node[below] {$-1 / D$};
-  \draw[dashed] (P) -- (0, 3) node[right] {$10\omega / D$};
-
-  % 角度（偏角θ）
-  \draw (0.5, 0) arc[start angle=0, end angle=108.4, radius=0.5cm];
-  \node at (2.0, 0.7) {$\angle G(j\omega)$};
-
-  % 注記
-  \node at (0, -1.8) {$ D = (10\omega)^2 + 1$};
-
-\end{tikzpicture}
-\end{minipage}
 
 \begin{minipage}{0.45\linewidth}
 また、ボード線図は\\
