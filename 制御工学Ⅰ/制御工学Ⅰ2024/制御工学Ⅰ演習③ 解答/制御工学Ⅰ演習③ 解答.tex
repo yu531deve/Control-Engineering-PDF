@@ -956,16 +956,15 @@ G_{All}(s) = G_1(s) + G_4(s) + G_1(s)G_4(s)
 パラメータを代入し、\(x_1(t)=\sin(2t)\)のラプラス変換は\(X_i(s)=\dfrac{2}{s^2+2^2}\)なので
     \vspace{-4mm}
     \begin{align*}
-        &\qquad G(s) = \frac{1}{s^2 + 2s+ 1} \\
-        &\therefore \quad X(s) = G(s) F(s) = \frac{1}{(s+1)^2(s^2+2^2)} \\
-        &\therefore \quad X(s) =  \frac{\left(\frac{1}{5}\right)}{(s+1)^2} 
-        + \frac{\left(\frac{2}{25}\right)}{s+1}
-        + \frac{\left(-\frac{2}{25}s-\frac{3}{25}\right)}{s^2+2^2}\\
+        &\qquad G(s) = \frac{1}{s^2 + 2s+ 2} \\
+        &\therefore \quad X(s) = G(s) F(s) = \frac{1}{(s^2 + 2s+ 2)(s^2+2^2)} \\
+        &\therefore \quad X(s) =  \frac{\left(\frac{1}{10}s+\frac{3}{10}\right)}{s^2 + 2s+ 2} 
+        + \frac{\left(-\frac{1}{10}s-\frac{1}{10}\right)}{s^2+2^2}\\
         &\therefore \quad \mathcal{L}^{-1} \left[ X(s)\right] 
-        = \mathcal{L}^{-1} \left[\frac{\left(\frac{5}{25}\right)}{(s+1)^2}  \right]
-        + \mathcal{L}^{-1} \left[\frac{\left(\frac{2}{25}\right)}{s+1} \right]
-        + \mathcal{L}^{-1} \left[\frac{\left(-\frac{2}{25}s-\frac{3}{25}\right)}{s^2+2^2}\right]  \\
-        &\therefore \quad x(t) = \frac{1}{25}e^{-t}(5t+2)- \frac{1}{25}\left(2\cos 2t + \frac{3}{2}\sin 2t\right)
+        = \mathcal{L}^{-1} \left[\frac{\frac{1}{10}(s+1)+\frac{2}{10}}{(s+1)^2 + 1}   \right]
+        + \mathcal{L}^{-1} \left[\frac{-\frac{1}{10}s-\frac{1}{10},
+        }{s^2+2^2} \right] \\
+        &\therefore \quad x(t) = \frac{1}{10} e^{-t}( \cos t+2 \sin t) - \frac{1}{20} (2 \cos 2t + \sin 2t)
     \end{align*}
 \end{tcolorbox}
 
