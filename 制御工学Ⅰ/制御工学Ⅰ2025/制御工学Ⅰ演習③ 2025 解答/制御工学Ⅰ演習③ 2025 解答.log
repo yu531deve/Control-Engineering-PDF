@@ -1,7 +1,7 @@
-This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2025.2.15)  17 JUL 2025 06:25
+This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2025.2.15)  18 JUL 2025 23:46
  restricted system commands enabled.
-**"c:/Users/81807/Desktop/TeX/制御工学/制御工学Ⅰ/制御工学Ⅰ2024/制御工学Ⅰ演習③ 解答/制御工学Ⅰ演習③ 解答"
-("c:/Users/81807/Desktop/TeX/制御工学/制御工学Ⅰ/制御工学Ⅰ2024/制御工学Ⅰ演習③ 解答/制御工学Ⅰ演習③ 解答.tex"
+**"c:/Users/81807/Desktop/TeX/制御工学/制御工学Ⅰ/制御工学Ⅰ2025/制御工学Ⅰ演習③ 2025 解答/制御工学Ⅰ演習③ 2025 解答"
+("c:/Users/81807/Desktop/TeX/制御工学/制御工学Ⅰ/制御工学Ⅰ2025/制御工学Ⅰ演習③ 2025 解答/制御工学Ⅰ演習③ 2025 解答.tex"
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 Lua module: luaotfload 2024-02-14 v3.28 Lua based OpenType font support
@@ -838,8 +838,8 @@ LaTeX Font Info:    Font shape `JT3/IPAexMincho(0)/m/n' will be
 (Font)              scaled to size 11.54663pt on input line 28.
 LaTeX Font Info:    Font shape `JY3/IPAexMincho(0)/m/n' will be
 (Font)              scaled to size 11.54663pt on input line 28.
- ("./制御工学Ⅰ演習③ 解答.aux")
-\openout1 = 制御工学Ⅰ演習③ 解答.aux
+ ("./制御工学Ⅰ演習③ 2025 解答.aux")
+\openout1 = 制御工学Ⅰ演習③ 2025 解答.aux
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 42.
 LaTeX Font Info:    ... okay on input line 42.
@@ -974,45 +974,18 @@ LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  OT1/cmtt/m/n --> TU/lmtt/b/n on input line 42.
 (load cache: extra_lmroman8-regular.luc)(load cache: extra_lmroman6-regular.luc)
-LaTeX Font Info:    Trying loading font information for U+msa on input line 60.
+LaTeX Font Info:    Trying loading font information for U+msa on input line 51.
 (c:/texlive/2024/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying loading font information for U+msb on input line 60.
+LaTeX Font Info:    Trying loading font information for U+msb on input line 51.
  (c:/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Font shape `JY3/IPAexMincho(0)/m/n' will be
-(Font)              scaled to size 7.69775pt on input line 60.
+(Font)              scaled to size 7.69775pt on input line 51.
 LaTeX Font Info:    Font shape `JY3/IPAexMincho(0)/m/n' will be
-(Font)              scaled to size 5.77332pt on input line 60.
-LaTeX Font Info:    Font shape `JT3/IPAexMincho(0)/m/n' will be
-(Font)              scaled to size 10.53629pt on input line 85.
-LaTeX Font Info:    Font shape `JY3/IPAexMincho(0)/m/n' will be
-(Font)              scaled to size 10.53629pt on input line 85.
-
-Overfull \hbox (3.87688pt too wide) in paragraph at lines 54--92
-[][] 
- []
-
-
-Overfull \hbox (23.79509pt too wide) in paragraph at lines 93--130
-[][] 
- []
-
-
-Overfull \hbox (23.79509pt too wide) in paragraph at lines 163--200
-[][] 
- []
-
-LaTeX Font Info:    Font shape `JT3/IPAexMincho(0)/m/n' will be
-(Font)              scaled to size 23.94002pt on input line 290.
-LaTeX Font Info:    Font shape `JY3/IPAexMincho(0)/m/n' will be
-(Font)              scaled to size 23.94002pt on input line 290.
-LaTeX Font Info:    Font shape `JY3/IPAexMincho(0)/m/n' will be
-(Font)              scaled to size 19.95642pt on input line 290.
-LaTeX Font Info:    Font shape `JY3/IPAexMincho(0)/m/n' will be
-(Font)              scaled to size 16.62714pt on input line 290.
+(Font)              scaled to size 5.77332pt on input line 51.
 
 
 [1
@@ -1022,15 +995,18 @@ LaTeX Font Info:    Font shape `JY3/IPAexMincho(0)/m/n' will be
 [2]
 
 [3]
-Overfull \hbox (6.86557pt too wide) in paragraph at lines 730--731
-[]\TU/lmr/m/n/12 4. 
- []
-
-
-Overfull \hbox (33.1178pt too wide) in paragraph at lines 796--797
- [] 
- []
-
+LaTeX Font Info:    Font shape `JT3/IPAexMincho(0)/m/n' will be
+(Font)              scaled to size 10.53629pt on input line 211.
+LaTeX Font Info:    Font shape `JY3/IPAexMincho(0)/m/n' will be
+(Font)              scaled to size 10.53629pt on input line 211.
+LaTeX Font Info:    Font shape `JT3/IPAexMincho(0)/m/n' will be
+(Font)              scaled to size 23.94002pt on input line 326.
+LaTeX Font Info:    Font shape `JY3/IPAexMincho(0)/m/n' will be
+(Font)              scaled to size 23.94002pt on input line 326.
+LaTeX Font Info:    Font shape `JY3/IPAexMincho(0)/m/n' will be
+(Font)              scaled to size 19.95642pt on input line 326.
+LaTeX Font Info:    Font shape `JY3/IPAexMincho(0)/m/n' will be
+(Font)              scaled to size 16.62714pt on input line 326.
 
 
 [4]
@@ -1040,39 +1016,31 @@ Overfull \hbox (33.1178pt too wide) in paragraph at lines 796--797
 [6]
 
 [7]
-Overfull \hbox (6.86557pt too wide) in paragraph at lines 977--978
-[]\TU/lmr/m/n/12 5. 
- []
-
-
-Overfull \hbox (33.1178pt too wide) in paragraph at lines 1047--1048
- [] 
- []
+Overfull \vbox (5.39308pt too high) has occurred while \output is active []
 
 
 
 [8]
+Overfull \hbox (6.86557pt too wide) in paragraph at lines 1111--1112
+[]\TU/lmr/m/n/12 6. 
+ []
+
+
+Overfull \hbox (33.1178pt too wide) in paragraph at lines 1177--1178
+ [] 
+ []
+
+
 
 [9]
-LaTeX Font Info:    Font shape `JT3/IPAexMincho(0)/m/n' will be
-(Font)              scaled to size 7.69775pt on input line 1286.
-
-Overfull \hbox (15.0639pt too wide) in paragraph at lines 1350--1351
- [] 
- []
-
-
-Overfull \hbox (13.72163pt too wide) in paragraph at lines 1454--1455
- [] 
- []
-
-
 
 [10]
 
 [11]
 
-[12] ("./制御工学Ⅰ演習③ 解答.aux")
+[12]
+
+[13] ("./制御工学Ⅰ演習③ 2025 解答.aux")
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -1080,19 +1048,19 @@ L3 programming layer <2025-01-18>
 )
 
 Here is how much of LuaTeX's memory you used:
- 31797 strings out of 475512
- 195698,1648299 words of node,token memory allocated
- 1195 words of node memory still in use:
-   11 hlist, 2 vlist, 5 rule, 2 glue, 4 kern, 1 glyph, 268 attribute, 52 glue_spec, 36 attribute_list, 2 write, 13 user_defined nodes
-   avail lists: 1:39,2:60977,3:3725,4:1560,5:328,6:42,7:4415,8:80,9:2128,10:7,11:18
- 53972 multiletter control sequences out of 65536+600000
+ 31726 strings out of 475512
+ 305787,1648299 words of node,token memory allocated
+ 1190 words of node memory still in use:
+   11 hlist, 2 vlist, 5 rule, 2 glue, 4 kern, 1 glyph, 268 attribute, 51 glue_spec, 36 attribute_list, 2 write, 13 user_defined nodes
+   avail lists: 1:39,2:94340,3:4272,4:1920,5:338,6:40,7:5107,8:83,9:2538,10:8,11:2
+ 53901 multiletter control sequences out of 65536+600000
  82 fonts using 41844663 bytes
- 116i,15n,115p,2014b,996s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2024/texmf-dist/fonts/opentype/public/lm/lmroman8-regular.otf><c:/texlive/2024/texmf-dist/fonts/opentype/public/lm/lmroman12-regular.otf><c:/texlive/2024/texmf-dist/fonts/truetype/public/ipaex/ipaexm.ttf><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on 制御工学Ⅰ演習③ 解答.pdf (12 pages, 341298 bytes).
+ 116i,15n,115p,2024b,1022s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/texlive/2024/texmf-dist/fonts/opentype/public/lm/lmroman12-regular.otf><c:/texlive/2024/texmf-dist/fonts/truetype/public/ipaex/ipaexm.ttf><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
+Output written on 制御工学Ⅰ演習③ 2025 解答.pdf (13 pages, 359133 bytes).
 
-PDF statistics: 104 PDF objects out of 1000 (max. 8388607)
- 70 compressed objects within 1 object stream
+PDF statistics: 112 PDF objects out of 1000 (max. 8388607)
+ 77 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 131072)
  21 words of extra memory for PDF output out of 10000 (max. 100000000)
 
